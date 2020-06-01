@@ -2,3 +2,8 @@ monsieurbiz_sylius_homepage_admin:
     resource: "@MonsieurBizSyliusHomepagePlugin/Resources/config/routes/admin.yaml"
     prefix: /admin
 
+monsieurbiz_sylius_homepage_shop:
+    resource: "@MonsieurBizSyliusHomepagePlugin/Resources/config/routes/shop.yaml"
+    prefix: /{_locale}
+    requirements:
+        _locale: ^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$

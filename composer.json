@@ -1,8 +1,8 @@
 {
-    "name": "monsieurbiz/sylius-settings-plugin",
+    "name": "monsieurbiz/sylius-homepage-plugin",
     "type": "sylius-plugin",
-    "keywords": ["sylius", "sylius-plugin", "settings", "monsieurbiz"],
-    "description": "Add a settings panel to your Sylius.",
+    "keywords": ["sylius", "sylius-plugin", "homepage", "monsieurbiz"],
+    "description": "Add a homepage management to your Sylius using the rich editor.",
     "license": "MIT",
     "require": {
         "php": "~7.4",

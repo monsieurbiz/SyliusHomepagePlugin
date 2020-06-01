@@ -1,0 +1,14 @@
+monsieurbiz_sylius_homepage_admin:
+    resource: |
+        alias: monsieurbiz_homepage.homepage
+        section: admin
+        templates: SyliusAdminBundle:Crud
+        except: ['show']
+        redirect: update
+        grid: monsieurbiz_homepage
+        vars:
+            all:
+                subheader: monsieurbiz_homepage.ui.homepages_subheader
+            index:
+                icon: 'home'
+    type: sylius.resource

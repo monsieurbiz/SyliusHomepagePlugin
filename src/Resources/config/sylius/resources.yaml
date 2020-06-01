@@ -1,0 +1,10 @@
+sylius_resource:
+    resources:
+        monsieurbiz_homepage.homepage:
+            classes:
+                model: MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\Homepage
+                form: MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageType
+            translation:
+                classes:
+                    model: MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\HomepageTranslation
+

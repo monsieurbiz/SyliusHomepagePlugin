@@ -1,0 +1,34 @@
+sylius_grid:
+  grids:
+    monsieurbiz_homepage:
+      driver:
+        name: doctrine/orm
+        options:
+          class: MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\Homepage
+      limits: [25, 50, 100, 200]
+      fields:
+        id:
+          type: integer
+          label: monsieurbiz_homepage.ui.form.id
+          sortable: ~
+        name:
+          type: string
+          label: monsieurbiz_homepage.ui.form.name
+          sortable: translation.name
+      actions:
+        main:
+          create:
+            type: create
+            label: monsieurbiz_homepage.ui.actions.create
+        item:
+          update:
+            type: update
+          delete:
+            type: delete
+      filters:
+        name:
+          type: string
+          label: monsieurbiz_homepage.ui.form.name
+        content:
+          type: string
+          label: monsieurbiz_homepage.ui.form.content

@@ -12,14 +12,9 @@ services:
         Sylius\Component\Resource\Model\ResourceInterface:
             autowire: false
 
-#    MonsieurBiz\SyliusHomepagePlugin\Controller\:
-#        resource: '../../Controller'
-#        tags: ['controller.service_arguments']
-
     MonsieurBiz\SyliusHomepagePlugin\Menu\AdminMenuListener:
         tags:
             - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItem }
-
 
     # Homepage Forms
     MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageType:

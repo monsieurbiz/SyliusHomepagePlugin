@@ -1,0 +1,4 @@
+/vendor
+.php-version
+composer.lock
+/tests/Application/yarn.lock

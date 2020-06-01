@@ -1,0 +1,19 @@
+sylius_ui:
+    events:
+        sylius.shop.homepage:
+            blocks:
+                monsieurbiz_homepage:
+                    template: "@MonsieurBizSyliusHomepagePlugin/Homepage/_view.html.twig"
+                    priority: 10
+                banner:
+                    enabled: false
+                latest_products:
+                    enabled: false
+                latest_products_carousel:
+                    enabled: false
+                newsletter:
+                    enabled: false
+                products_grid:
+                    enabled: false
+                about_us:
+                    enabled: false

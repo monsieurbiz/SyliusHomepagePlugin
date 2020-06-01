@@ -4,6 +4,7 @@ sylius_resource:
             classes:
                 model: MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\Homepage
                 form: MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageType
+                repository: MonsieurBiz\SyliusHomepagePlugin\Repository\HomepageRepository
             translation:
                 classes:
                     model: MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\HomepageTranslation

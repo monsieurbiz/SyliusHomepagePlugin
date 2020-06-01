@@ -42,7 +42,7 @@ class Homepage implements ResourceInterface, TranslatableInterface
      * @ORM\JoinTable(
      *     name="mbiz_homepage_homepage_channels",
      *     joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="channel_id", referencedColumnName="id")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="channel_id", referencedColumnName="id", unique=true)}
      * )
      */
     private $channels;

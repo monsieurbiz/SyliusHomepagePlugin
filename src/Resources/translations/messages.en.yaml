@@ -1,0 +1,17 @@
+monsieurbiz_homepage:
+    ui:
+        cms_content: "CMS contents"
+        homepages: "Homepages"
+        homepages_subheader: "Manage your homepages"
+        new_homepage: "New homepage"
+        edit_homepage: "Edit homepage"
+        form:
+            name: "Name"
+            content: "Content"
+            channels: "Channels"
+            meta_title: "Meta title"
+            meta_description: "Meta description"
+            meta_keywords: "Meta keywords"
+            id: "ID"
+        actions:
+            create: "New homepage"

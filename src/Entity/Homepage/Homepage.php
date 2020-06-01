@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
+use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -18,7 +19,7 @@ use Sylius\Component\Resource\Model\TranslationInterface;
  * @ORM\Entity()
  * @ORM\Table(name="mbiz_homepage_homepage")
  */
-class Homepage implements ResourceInterface
+class Homepage implements ResourceInterface, TranslatableInterface
 {
     use TimestampableTrait;
     use TranslatableTrait {
@@ -109,6 +110,23 @@ class Homepage implements ResourceInterface
     public function hasChannel(ChannelInterface $channel): bool
     {
         return $this->channels->contains($channel);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->getTranslation()->getName();
+    }
+
+    /**
+     * @param string|null $name
+     * @return void
+     */
+    public function setName(?string $name): void
+    {
+        $this->getTranslation()->setName($name);
     }
 
     /**

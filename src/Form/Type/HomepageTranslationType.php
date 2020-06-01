@@ -19,28 +19,31 @@ class HomepageTranslationType extends AbstractResourceType
     {
         $builder
             ->add('content', RichEditorType::class, [
-                'label' => 'monsieurbiz_homepage.ui.form.content',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
+                'label' => 'monsieurbiz_homepage.ui.form.content'
+            ])
+            ->add('name', TextType::class, [
+                'label' => 'monsieurbiz_homepage.ui.form.name',
+//                'constraints' => [
+//                    new Assert\NotBlank([])
+//                ],
             ])
             ->add('metaTitle', TextType::class, [
                 'label' => 'monsieurbiz_homepage.ui.form.meta_title',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
+//                'constraints' => [
+//                    new Assert\NotBlank([])
+//                ],
             ])
             ->add('metaDescription', TextType::class, [
                 'label' => 'monsieurbiz_homepage.ui.form.meta_description',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
+//                'constraints' => [
+//                    new Assert\NotBlank([])
+//                ],
             ])
             ->add('metaKeywords', TextType::class, [
                 'label' => 'monsieurbiz_homepage.ui.form.meta_keywords',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
+//                'constraints' => [
+//                    new Assert\NotBlank([])
+//                ],
             ])
         ;
     }

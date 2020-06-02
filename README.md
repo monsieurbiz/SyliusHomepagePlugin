@@ -8,15 +8,15 @@
     </a>
 </p>
 
-<h1 align="center">Settings for Sylius</h1>
+<h1 align="center">Homepage management for Sylius</h1>
 
 <!--
-[![Settings Plugin license](https://img.shields.io/github/license/monsieurbiz/SyliusSettingsPlugin?public)](https://github.com/monsieurbiz/SyliusSettingsPlugin/blob/master/LICENSE)
-![Tests](https://github.com/monsieurbiz/SyliusSettingsPlugin/workflows/CI/badge.svg)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/monsieurbiz/SyliusSettingsPlugin/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/monsieurbiz/SyliusSettingsPlugin/?branch=master)
+[![Homepage Plugin license](https://img.shields.io/github/license/monsieurbiz/SyliusHomepagePlugin?public)](https://github.com/monsieurbiz/SyliusHomepagePlugin/blob/master/LICENSE)
+![Tests](https://github.com/monsieurbiz/SyliusHomepagePlugin/workflows/CI/badge.svg)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/monsieurbiz/SyliusHomepagePlugin/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/monsieurbiz/SyliusHomepagePlugin/?branch=master)
 -->
 
-This plugin gives the ability to have Plugins oriented settings in your favorite e-commerce platform, Sylius.
+This plugins allows you to manage your homepage with a powerful editor.
 
 ## Installation
 
@@ -33,7 +33,7 @@ To Be Defined
 1. Require the plugin using composer
 
     ```bash
-    composer require monsieurbiz/sylius-settings-plugin
+    composer require monsieurbiz/sylius-homepage-plugin
     ```
 
 2. Generate & Run Doctrine migrations
@@ -63,4 +63,4 @@ Thank you!
 
 ## License
 
-This plugin is completely free and released under the [MIT License](https://github.com/monsieurbiz/SyliusSettingsPlugin/blob/master/LICENSE).
+This plugin is completely free and released under the [MIT License](https://github.com/monsieurbiz/SyliusHomepagePlugin/blob/master/LICENSE).

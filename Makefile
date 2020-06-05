@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL=/bin/bash
 SYMFONY=cd tests/Application && symfony
-COMPOSER=${SYMFONY} composer
+COMPOSER=COMPOSER_MEMORY_LIMIT=-1 symfony composer
 CONSOLE=${SYMFONY} console
 DOCKER-COMPOSE=docker-compose
 YARN=cd tests/Application && yarn
@@ -85,6 +85,19 @@ server.start: ## Run the local webserver using Symfony
 
 server.stop: ## Stop the local webserver
 	${SYMFONY} local:server:stop
+
+###
+### TESTING
+### ¯¯¯¯¯¯¯¯
+
+phpunit: ## Run phpunit
+	./vendor/bin/phpunit
+
+phpspec: ## Run phpspec
+	./vendor/bin/phpspec run
+
+phpstan: ## Run phpstan
+	./vendor/bin/phpstan analyse src
 
 ###
 ### HELP

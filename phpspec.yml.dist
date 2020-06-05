@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: MonsieurBiz\SyliusHomepagePlugin
+        psr4_prefix: MonsieurBiz\SyliusHomepagePlugin

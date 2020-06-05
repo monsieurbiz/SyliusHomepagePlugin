@@ -43,7 +43,7 @@ make help
   - PHPSpec
 
     ```bash
-    make phpunit
+    make phpspec
     ```
     
   - PHPStan

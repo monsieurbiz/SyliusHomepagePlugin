@@ -1,0 +1,4 @@
+sylius:
+    resource:
+        monsieurbiz_homepage:
+            unique_channel: 'Vous ne pouvez pas avoir plusieures pages d''accueil pour un même canal.'

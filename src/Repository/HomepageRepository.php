@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MonsieurBiz\SyliusHomepagePlugin\Repository;
 
 use Doctrine\ORM\QueryBuilder;
-use MonsieurBiz\SyliusHomepagePlugin\Entity\HomePage\Homepage;
+use MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\Homepage;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
 

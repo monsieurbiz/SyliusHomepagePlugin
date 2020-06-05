@@ -11,7 +11,7 @@ final class AdminMenuListener
     /**
      * @var MenuManipulator
      */
-    private MenuManipulator $manipulator;
+    private $manipulator;
 
     /**
      * AdminMenuListener constructor.

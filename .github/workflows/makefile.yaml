@@ -48,4 +48,4 @@ jobs:
       - run: mkdir -p /home/runner/.composer/cache
         if: steps.cache-composer.outputs.cache-hit != 'true'
 
-      - run: make bazinga
+      - run: make install

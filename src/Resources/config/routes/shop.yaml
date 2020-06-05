@@ -1,3 +1,0 @@
-monsieurbiz_sylius_homepage_shop_partial:
-    resource: "@MonsieurBizSyliusHomepagePlugin/Resources/config/routes/shop/partial.yaml"
-    prefix: /_partial

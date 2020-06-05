@@ -1,0 +1,36 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% block title %}
+    {% if homepages is not empty and homepages.metaTitle is not empty %}
+        {{ homepages.metaTitle }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block metatags %}
+    {{ parent() }}
+    {% if homepages is not empty and homepages.metaTitle is not empty %}
+        <meta property="og:title" content="{{ homepages.metaTitle }}"/>
+    {% endif %}
+    {% if homepages is not empty and homepages.metaDescription is not empty %}
+        <meta name="og:description" property="og:description" content="{{ homepages.metaDescription }}"/>
+        <meta name="description" property="og:description" content="{{ homepages.metaDescription }}"/>
+    {% endif %}
+    {% if homepages is not empty and homepages.metaKeywords is not empty %}
+        <meta name="keywords" content="{{ homepages.metaKeywords }}"/>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="homepage">
+        <div class="ui hidden divider"></div>
+
+        {% if homepages is not empty %}
+            {{ homepages.content | mbiz_rich_editor_render }}
+        {% else %}
+            {{ sylius_template_event('sylius.shop.homepage') }}
+        {% endif %}
+
+    </div>
+{% endblock %}

@@ -1,29 +1,49 @@
 {
     "name": "monsieurbiz/sylius-homepage-plugin",
     "type": "sylius-plugin",
-    "keywords": ["sylius", "sylius-plugin", "homepage", "monsieurbiz"],
+    "keywords": ["sylius", "sylius-plugin", "monsieurbiz"],
     "description": "Add a homepage management to your Sylius using the rich editor.",
     "license": "MIT",
     "require": {
         "php": "~7.4",
-        "ext-mbstring": "*",
-        "sylius/sylius": "^1.7",
-        "monsieurbiz/sylius-rich-editor-plugin": "^1.1"
+        "sylius/sylius": "^1.8",
+        "gedmo/doctrine-extensions": "^2.4.12",
+        "monsieurbiz/sylius-rich-editor-plugin": "v2.0.0-RC.1",
+        "phpstan/phpstan-webmozart-assert": "^0.12.7"
     },
     "require-dev": {
+        "behat/behat": "^3.6.1",
+        "behat/mink-selenium2-driver": "^1.4",
+        "dmore/behat-chrome-extension": "^1.3",
+        "dmore/chrome-mink-driver": "^2.7",
+        "doctrine/data-fixtures": "^1.4",
+        "ergebnis/composer-normalize": "^2.5",
+        "friends-of-behat/mink": "^1.8",
+        "friends-of-behat/mink-browserkit-driver": "^1.4",
+        "friends-of-behat/mink-extension": "^2.4",
+        "friends-of-behat/page-object-extension": "^0.3",
+        "friends-of-behat/symfony-extension": "^2.1",
+        "friends-of-behat/variadic-extension": "^1.3",
+        "hwi/oauth-bundle": "^1.1",
+        "lchrusciel/api-test-case": "^5.0",
+        "matthiasnoback/symfony-config-test": "^4.2",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+        "mikey179/vfsstream": "^1.6",
+        "mockery/mockery": "^1.4",
+        "pamil/prophecy-common": "^0.1",
         "phpspec/phpspec": "^6.1",
-        "phpstan/phpstan-doctrine": "^0.11",
-        "phpstan/phpstan-shim": "^0.11",
-        "phpstan/phpstan-webmozart-assert": "^0.11",
-        "sensiolabs/security-checker": "^6.0",
+        "phpstan/phpstan": "0.12.29",
+        "phpstan/phpstan-doctrine": "0.12.16",
+        "phpunit/phpunit": "^8.5",
+        "psalm/plugin-mockery": "^0.3",
+        "psr/event-dispatcher": "^1.0",
+        "sspooky13/yaml-standards": "^5.1",
         "sylius-labs/coding-standard": "^3.1",
         "symfony/browser-kit": "^4.4",
         "symfony/debug-bundle": "^4.4",
         "symfony/dotenv": "^4.4",
-        "symfony/intl": "^4.4",
-        "symfony/web-profiler-bundle": "^4.4",
-        "symfony/web-server-bundle": "^4.4",
-        "lchrusciel/api-test-case": "^3.0"
+        "symfony/flex": "^1.7",
+        "symfony/web-profiler-bundle": "^4.4"
     },
     "prefer-stable": true,
     "autoload": {
@@ -32,14 +52,22 @@
         }
     },
     "autoload-dev": {
-        "classmap": ["tests/Application/src/Kernel.php"]
+        "classmap": ["tests/Application/src/Kernel.php"],
+        "psr-4": {
+            "App\\": "tests/Application/src/",
+            "Tests\\MonsieurBiz\\SyliusHomepagePlugin\\": "tests/"
+        }
     },
     "extra": {
-        "symfony": {
-            "require": "^4.4"
-        },
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "phpcs": "php-cs-fixer fix --using-cache=false"
     }
 }

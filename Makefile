@@ -1,10 +1,15 @@
 .DEFAULT_GOAL := help
 SHELL=/bin/bash
-SYMFONY=cd tests/Application && symfony
-COMPOSER=COMPOSER_MEMORY_LIMIT=-1 symfony composer
+APP_DIR=tests/Application
+SYMFONY=cd ${APP_DIR} && symfony
+COMPOSER=symfony composer
 CONSOLE=${SYMFONY} console
-DOCKER-COMPOSE=docker-compose
-YARN=cd tests/Application && yarn
+export COMPOSE_PROJECT_NAME=cms-homepage
+COMPOSE=docker-compose
+YARN=yarn
+PHPSTAN=symfony php vendor/bin/phpstan
+PHPUNIT=symfony php vendor/bin/phpunit
+PHPSPEC=symfony php vendor/bin/phpspec
 
 ###
 ### DEVELOPMENT
@@ -18,7 +23,7 @@ stop: server.stop docker.stop ## Stop the project (stop docker, stop symfony ser
 down: server.stop docker.down ## Down the project (removes docker containers, stop symfony server)
 
 reset: docker.down ## Stop docker and remove dependencies
-	rm -rf tests/Application/{node_modules} tests/Application/yarn.lock
+	rm -rf ${APP_DIR}/node_modules ${APP_DIR}/yarn.lock
 	rm -rf vendor composer.lock
 .PHONY: reset
 
@@ -27,29 +32,74 @@ dependencies: vendor node_modules ## Setup the dependencies
 
 .php-version: .php-version.dist
 	cp .php-version.dist .php-version
-	(cd tests/Application && ln -sf ../../.php-version .php-version)
+	(cd ${APP_DIR} && ln -sf ../../.php-version)
 
 vendor: composer.lock ## Install the PHP dependencies using composer
+ifdef GITHUB_ACTIONS
+	${COMPOSER} install --prefer-dist
+else
 	${COMPOSER} install --prefer-source
+endif
 
 composer.lock: composer.json
-	${COMPOSER} update
+ifdef GITHUB_ACTIONS
+	${COMPOSER} update --prefer-dist
+else
+	${COMPOSER} update --prefer-source
+endif
 
-yarn.install: tests/Application/yarn.lock
+yarn.install: ${APP_DIR}/yarn.lock
 
-tests/Application/yarn.lock:
-	${YARN} install
-	${YARN} build
+${APP_DIR}/yarn.lock:
+	ln -sf ${APP_DIR}/node_modules node_modules
+	cd ${APP_DIR} && ${YARN} install && ${YARN} build
 
-node_modules: tests/Application/node_modules ## Install the Node dependencies using yarn
+node_modules: ${APP_DIR}/node_modules ## Install the Node dependencies using yarn
 
-tests/Application/node_modules: yarn.install
+${APP_DIR}/node_modules: yarn.install
+
+###
+### TESTS
+### ¯¯¯¯¯
+
+test.all: test.composer test.phpstan test.phpunit test.phpspec test.phpcs test.yaml test.schema test.twig ## Run all tests in once
+
+test.composer: ## Validate composer.json
+	${COMPOSER} validate
+#	${COMPOSER} validate --strict
+
+test.phpstan: ## Run PHPStan
+	${PHPSTAN} analyse -c phpstan.neon src/
+
+test.phpunit: ## Run PHPUnit
+	${PHPUNIT}
+
+test.phpspec: ## Run PHPSpec
+	${PHPSPEC} run
+
+test.phpcs: ## Run PHP CS Fixer in dry-run
+	${COMPOSER} run -- phpcs --dry-run -v
+
+test.phpcs.fix: ## Run PHP CS Fixer and fix issues if possible
+	${COMPOSER} run -- phpcs -v
+
+test.container: ## Lint the symfony container
+	${CONSOLE} lint:container
+
+test.yaml: ## Lint the symfony Yaml files
+	${CONSOLE} lint:yaml ../../recipes ../../src/Resources/config
+
+test.schema: ## Validate MySQL Schema
+	${CONSOLE} doctrine:schema:validate
+
+test.twig: ## Validate Twig templates
+	${CONSOLE} lint:twig -e prod --no-debug templates/ ../../src/Resources/views/
 
 ###
 ### SYLIUS
 ### ¯¯¯¯¯¯
 
-sylius: dependencies sylius.database sylius.fixtures ## Install Sylius
+sylius: dependencies sylius.database sylius.fixtures sylius.assets ## Install Sylius
 .PHONY: sylius
 
 sylius.database: ## Setup the database
@@ -60,6 +110,11 @@ sylius.database: ## Setup the database
 sylius.fixtures: ## Run the fixtures
 	${CONSOLE} sylius:fixtures:load -n default
 
+sylius.assets: ## Install all assets with symlinks
+	${CONSOLE} assets:install --symlink
+	${CONSOLE} sylius:install:assets
+	${CONSOLE} sylius:theme:assets:install --symlink
+
 ###
 ### PLATFORM
 ### ¯¯¯¯¯¯¯¯
@@ -67,37 +122,26 @@ sylius.fixtures: ## Run the fixtures
 platform: .php-version up ## Setup the platform tools
 .PHONY: platform
 
+docker.pull: ## Pull the docker images
+	cd ${APP_DIR} && ${COMPOSE} pull
+
 docker.up: ## Start the docker containers
-	cd tests/Application && ${DOCKER-COMPOSE} up -d
+	cd ${APP_DIR} && ${COMPOSE} up -d
 .PHONY: docker.up
 
 docker.stop: ## Stop the docker containers
-	cd tests/Application && ${DOCKER-COMPOSE} stop
+	cd ${APP_DIR} && ${COMPOSE} stop
 .PHONY: docker.stop
 
 docker.down: ## Stop and remove the docker containers
-	cd tests/Application && ${DOCKER-COMPOSE} down
+	cd ${APP_DIR} && ${COMPOSE} down
 .PHONY: docker.down
 
 server.start: ## Run the local webserver using Symfony
-	${SYMFONY} local:proxy:domain:attach sylius
 	${SYMFONY} local:server:start -d
 
 server.stop: ## Stop the local webserver
 	${SYMFONY} local:server:stop
-
-###
-### TESTING
-### ¯¯¯¯¯¯¯¯
-
-phpunit: ## Run phpunit
-	./vendor/bin/phpunit
-
-phpspec: ## Run phpspec
-	./vendor/bin/phpspec run
-
-phpstan: ## Run phpstan
-	./vendor/bin/phpstan analyse src
 
 ###
 ### HELP

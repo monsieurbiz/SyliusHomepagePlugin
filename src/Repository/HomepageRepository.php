@@ -24,6 +24,11 @@ class HomepageRepository extends EntityRepository
         ;
     }
 
+    /**
+     * @param ChannelInterface $channel
+     * @param string $locale
+     * @return Homepage|null
+     */
     public function findOneByChannelAndLocale(ChannelInterface $channel, string $locale): ?Homepage
     {
         return $this->createQueryBuilder('o')

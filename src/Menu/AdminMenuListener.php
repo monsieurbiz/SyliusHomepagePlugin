@@ -23,22 +23,24 @@ final class AdminMenuListener
         $this->manipulator = $manipulator;
     }
 
+    /**
+     * @param MenuBuilderEvent $event
+     */
     public function addAdminMenuItem(MenuBuilderEvent $event): void
     {
         $menu = $event->getMenu();
 
-        if (!$content = $menu->getChild('mbiz-cms')) {
+        if (!$content = $menu->getChild('monsieurbiz-cms')) {
             $content = $menu
-                ->addChild('mbiz-cms')
+                ->addChild('monsieurbiz-cms')
                 ->setLabel('monsieurbiz_homepage.ui.cms_content')
             ;
         }
 
-        $content->addChild('mbiz-homepage-homepage', ['route' => 'monsieurbiz_homepage_admin_homepage_index'])
+        $content->addChild('monsieurbiz-homepage-homepage', ['route' => 'monsieurbiz_homepage_admin_homepage_index'])
             ->setLabel('monsieurbiz_homepage.ui.homepages')
             ->setLabelAttribute('icon', 'home')
         ;
-        $this->manipulator->moveChildToPosition($menu, $content, 0);
     }
 
 }

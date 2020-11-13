@@ -8,7 +8,7 @@
         "php": "~7.4",
         "ext-mbstring": "*",
         "sylius/sylius": "^1.7",
-        "monsieurbiz/sylius-rich-editor-plugin": "^1.1"
+        "monsieurbiz/sylius-rich-editor-plugin": "^1.1 || ^2.0@RC"
     },
     "require-dev": {
         "phpspec/phpspec": "^6.1",

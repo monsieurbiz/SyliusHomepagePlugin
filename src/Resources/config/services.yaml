@@ -7,10 +7,13 @@ services:
     _instanceof:
         Sylius\Bundle\ResourceBundle\Controller\ResourceController:
             autowire: false
-        Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType:
-            autowire: false
-        Sylius\Component\Resource\Model\ResourceInterface:
-            autowire: false
+
+    MonsieurBiz\SyliusHomepagePlugin\:
+        resource: '../../*'
+
+    MonsieurBiz\SyliusHomepagePlugin\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
 
     # Menu item in admin panel
     MonsieurBiz\SyliusHomepagePlugin\Menu\AdminMenuListener:
@@ -25,3 +28,9 @@ services:
     MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageTranslationType:
         arguments:
             - '%monsieurbiz_homepage.model.homepage_translation.class%'
+
+    # Fixtures
+    MonsieurBiz\SyliusHomepagePlugin\Fixture\HomepageFixture:
+        arguments:
+            $exampleFactory: '@MonsieurBiz\SyliusHomepagePlugin\Fixture\Factory\HomepageFixtureFactory'
+

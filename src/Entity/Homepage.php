@@ -71,7 +71,7 @@ class Homepage implements HomepageInterface
     protected $updatedAt;
 
     /**
-     * Page constructor.
+     * Homepage constructor.
      */
     public function __construct()
     {

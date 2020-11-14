@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Monsieur Biz' Homepage plugin for Sylius.
+ *
+ * (c) Monsieur Biz <sylius@monsieurbiz.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Repository;
@@ -13,6 +22,7 @@ class HomepageRepository extends EntityRepository
 {
     /**
      * @param string $localeCode
+     *
      * @return QueryBuilder
      */
     public function createListQueryBuilder(string $localeCode): QueryBuilder
@@ -27,8 +37,10 @@ class HomepageRepository extends EntityRepository
     /**
      * @param ChannelInterface $channel
      * @param string $locale
-     * @return HomepageInterface|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * @return HomepageInterface|null
      */
     public function findOneByChannelAndLocale(ChannelInterface $channel, string $locale): ?HomepageInterface
     {

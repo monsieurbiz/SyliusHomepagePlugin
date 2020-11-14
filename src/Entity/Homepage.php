@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of Monsieur Biz' Homepage plugin for Sylius.
+ *
+ * (c) Monsieur Biz <sylius@monsieurbiz.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
@@ -6,16 +16,16 @@ namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Webmozart\Assert\Assert;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity
  * @ORM\Table(name="monsieurbiz_homepage_homepage")
  */
 class Homepage implements HomepageInterface
@@ -29,8 +39,8 @@ class Homepage implements HomepageInterface
     /**
      * @var int|null
      *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -108,6 +118,7 @@ class Homepage implements HomepageInterface
 
     /**
      * @param ChannelInterface $channel
+     *
      * @return bool
      */
     public function hasChannel(ChannelInterface $channel): bool
@@ -125,6 +136,7 @@ class Homepage implements HomepageInterface
 
     /**
      * @param string|null $name
+     *
      * @return void
      */
     public function setName(?string $name): void
@@ -142,6 +154,7 @@ class Homepage implements HomepageInterface
 
     /**
      * @param string|null $content
+     *
      * @return void
      */
     public function setContent(?string $content): void
@@ -159,6 +172,7 @@ class Homepage implements HomepageInterface
 
     /**
      * @param string|null $metaTitle
+     *
      * @return void
      */
     public function setMetaTitle(?string $metaTitle): void
@@ -176,6 +190,7 @@ class Homepage implements HomepageInterface
 
     /**
      * @param string|null $metaDescription
+     *
      * @return void
      */
     public function setMetaDescription(?string $metaDescription): void
@@ -193,6 +208,7 @@ class Homepage implements HomepageInterface
 
     /**
      * @param string|null $metaKeywords
+     *
      * @return void
      */
     public function setMetaKeywords(?string $metaKeywords): void
@@ -201,7 +217,7 @@ class Homepage implements HomepageInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createTranslation(): HomepageTranslation
     {

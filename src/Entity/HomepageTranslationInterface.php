@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of Monsieur Biz' Homepage plugin for Sylius.
+ *
+ * (c) Monsieur Biz <sylius@monsieurbiz.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
@@ -20,6 +30,7 @@ interface HomepageTranslationInterface extends ResourceInterface, TranslationInt
 
     /**
      * @param string|null $name
+     *
      * @return void
      */
     public function setName(?string $name): void;
@@ -31,6 +42,7 @@ interface HomepageTranslationInterface extends ResourceInterface, TranslationInt
 
     /**
      * @param string|null $content
+     *
      * @return void
      */
     public function setContent(?string $content): void;
@@ -42,6 +54,7 @@ interface HomepageTranslationInterface extends ResourceInterface, TranslationInt
 
     /**
      * @param string|null $metaTitle
+     *
      * @return void
      */
     public function setMetaTitle(?string $metaTitle): void;
@@ -53,6 +66,7 @@ interface HomepageTranslationInterface extends ResourceInterface, TranslationInt
 
     /**
      * @param string|null $metaDescription
+     *
      * @return void
      */
     public function setMetaDescription(?string $metaDescription): void;
@@ -64,6 +78,7 @@ interface HomepageTranslationInterface extends ResourceInterface, TranslationInt
 
     /**
      * @param string|null $metaKeywords
+     *
      * @return void
      */
     public function setMetaKeywords(?string $metaKeywords): void;

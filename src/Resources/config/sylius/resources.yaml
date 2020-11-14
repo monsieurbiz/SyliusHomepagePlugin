@@ -2,12 +2,12 @@ sylius_resource:
     resources:
         monsieurbiz_homepage.homepage:
             classes:
-                model: MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\Homepage
-                interface: MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\HomepageInterface
+                model: MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage
+                interface: MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageInterface
                 form: MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageType
                 repository: MonsieurBiz\SyliusHomepagePlugin\Repository\HomepageRepository
                 controller: MonsieurBiz\SyliusHomepagePlugin\Controller\Admin\HomepageController
             translation:
                 classes:
-                    model: MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\HomepageTranslation
+                    model: MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageTranslation
 

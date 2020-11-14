@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage;
+namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
 
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;

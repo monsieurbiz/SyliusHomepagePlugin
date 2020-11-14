@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage;
+namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TranslationInterface;

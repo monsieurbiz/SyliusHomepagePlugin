@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Fixture\Factory;
 
-use MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\HomepageInterface;
-use MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\HomepageTranslationInterface;
+use MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageInterface;
+use MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageTranslationInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
 use Sylius\Bundle\CoreBundle\Fixture\OptionsResolver\LazyOption;

@@ -1,19 +1,19 @@
 monsieurbiz_homepage:
     ui:
-        cms_content: "Contenus CMS"
-        homepages: "Pages d'accueil"
-        homepages_subheader: "Gérez vos pages d'accueil"
-        new_homepage: "Nouvelle page d'accueil"
-        edit_homepage: "Édition d'une page d'accueil"
+        cms_content: 'Contenus CMS'
+        homepages: 'Pages d''accueil'
+        homepages_subheader: 'Gérez vos pages d''accueil'
+        new_homepage: 'Nouvelle page d''accueil'
+        edit_homepage: 'Édition d''une page d''accueil'
         form:
-            homepage_info: 'Informations de la homepage'
-            homepage_content: 'Contenu de la homepage'
-            name: "Nom"
-            content: "Contenu"
-            channels: "Canaux"
-            meta_title: "Meta titre"
-            meta_description: "Meta description"
-            meta_keywords: "Meta mots clés"
-            id: "ID"
+            homepage_info: 'Informations de la page d''accueil'
+            homepage_content: 'Contenu de la page d''accueil'
+            name: 'Nom'
+            content: 'Contenu'
+            channels: 'Canaux'
+            meta_title: 'Meta titre'
+            meta_description: 'Meta description'
+            meta_keywords: 'Meta mots clés'
+            id: 'ID'
         actions:
-            create: "Nouvelle page d'accueil"
+            create: 'Nouvelle page d''accueil'

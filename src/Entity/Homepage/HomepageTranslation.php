@@ -5,14 +5,12 @@ namespace MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\AbstractTranslation;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\Model\TranslationInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="mbiz_homepage_homepage_translation")
  */
-class HomepageTranslation extends AbstractTranslation implements ResourceInterface, TranslationInterface
+class HomepageTranslation extends AbstractTranslation implements HomepageTranslationInterface
 {
     /**
      * @var int
@@ -29,7 +27,6 @@ class HomepageTranslation extends AbstractTranslation implements ResourceInterfa
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $name;
-
 
     /**
      * @var string|null

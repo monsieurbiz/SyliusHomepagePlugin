@@ -3,12 +3,8 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage;
 
-use Doctrine\Common\Collections\Collection;
-use Gedmo\Timestampable\Timestampable;
-use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\Model\TimestampableInterface;
-use Sylius\Component\Resource\Model\TranslatableInterface;
+use Sylius\Component\Resource\Model\TranslationInterface;
 
 interface HomepageTranslationInterface extends ResourceInterface, TranslationInterface
 {

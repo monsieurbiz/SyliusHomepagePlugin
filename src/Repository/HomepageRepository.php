@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MonsieurBiz\SyliusHomepagePlugin\Repository;
 
 use Doctrine\ORM\QueryBuilder;
-use MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\Homepage;
+use MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\HomepageInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
 
@@ -27,9 +27,10 @@ class HomepageRepository extends EntityRepository
     /**
      * @param ChannelInterface $channel
      * @param string $locale
-     * @return Homepage|null
+     * @return HomepageInterface|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByChannelAndLocale(ChannelInterface $channel, string $locale): ?Homepage
+    public function findOneByChannelAndLocale(ChannelInterface $channel, string $locale): ?HomepageInterface
     {
         return $this->createQueryBuilder('o')
             ->addSelect('translation')

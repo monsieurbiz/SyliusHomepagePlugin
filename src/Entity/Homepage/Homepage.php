@@ -7,19 +7,18 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Model\ChannelInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
-use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Sylius\Component\Resource\Model\TranslationInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="mbiz_homepage_homepage")
  */
-class Homepage implements ResourceInterface, TranslatableInterface
+class Homepage implements HomepageInterface
 {
     use TimestampableTrait;
     use TranslatableTrait {
@@ -107,6 +106,10 @@ class Homepage implements ResourceInterface, TranslatableInterface
         $this->channels = new ArrayCollection();
     }
 
+    /**
+     * @param ChannelInterface $channel
+     * @return bool
+     */
     public function hasChannel(ChannelInterface $channel): bool
     {
         return $this->channels->contains($channel);
@@ -208,12 +211,12 @@ class Homepage implements ResourceInterface, TranslatableInterface
     /**
      * @param string|null $locale
      *
-     * @return HomepageTranslation
+     * @return HomepageTranslationInterface
      */
     public function getTranslation(?string $locale = null): TranslationInterface
     {
-        /** @var HomepageTranslation $translation */
         $translation = $this->doGetTranslation($locale);
+        Assert::isInstanceOf($translation, HomepageTranslationInterface::class);
 
         return $translation;
     }

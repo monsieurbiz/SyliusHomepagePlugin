@@ -9,6 +9,8 @@ monsieurbiz_sylius_homepage_admin:
         vars:
             all:
                 subheader: monsieurbiz_homepage.ui.homepages_subheader
+                templates:
+                    form: "@MonsieurBizSyliusHomepagePlugin/Admin/Homepage/_form.html.twig"
             index:
                 icon: 'home'
     type: sylius.resource

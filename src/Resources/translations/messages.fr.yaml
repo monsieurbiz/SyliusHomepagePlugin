@@ -6,6 +6,8 @@ monsieurbiz_homepage:
         new_homepage: "Nouvelle page d'accueil"
         edit_homepage: "Édition d'une page d'accueil"
         form:
+            homepage_info: 'Informations de la homepage'
+            homepage_content: 'Contenu de la homepage'
             name: "Nom"
             content: "Contenu"
             channels: "Canaux"

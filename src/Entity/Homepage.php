@@ -46,7 +46,7 @@ class Homepage implements HomepageInterface
     private $id;
 
     /**
-     * @var Collection
+     * @var Collection<int, ChannelInterface>
      * @ORM\ManyToMany(targetEntity="\Sylius\Component\Channel\Model\Channel")
      * @ORM\JoinTable(
      *     name="monsieurbiz_homepage_homepage_channels",
@@ -88,7 +88,7 @@ class Homepage implements HomepageInterface
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, ChannelInterface>
      */
     public function getChannels(): Collection
     {

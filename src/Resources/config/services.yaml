@@ -23,11 +23,13 @@ services:
     # Homepage Forms
     MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageType:
         arguments:
-            - '%monsieurbiz_homepage.model.homepage.class%'
+            $dataClass: '%monsieurbiz_homepage.model.homepage.class%'
+            $validationGroups: ['monsieurbiz']
 
     MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageTranslationType:
         arguments:
-            - '%monsieurbiz_homepage.model.homepage_translation.class%'
+            $dataClass: '%monsieurbiz_homepage.model.homepage_translation.class%'
+            $validationGroups: ['monsieurbiz']
 
     # Fixtures
     MonsieurBiz\SyliusHomepagePlugin\Fixture\HomepageFixture:

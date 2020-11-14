@@ -20,15 +20,9 @@ class HomepageTranslationType extends AbstractResourceType
         $builder
             ->add('content', RichEditorType::class, [
                 'label' => 'monsieurbiz_homepage.ui.form.content',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
             ])
             ->add('name', TextType::class, [
                 'label' => 'monsieurbiz_homepage.ui.form.name',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
             ])
             ->add('metaTitle', TextType::class, [
                 'required' => false,

@@ -16,7 +16,7 @@ use Webmozart\Assert\Assert;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="mbiz_homepage_homepage")
+ * @ORM\Table(name="monsieurbiz_homepage_homepage")
  */
 class Homepage implements HomepageInterface
 {
@@ -39,7 +39,7 @@ class Homepage implements HomepageInterface
      * @var Collection
      * @ORM\ManyToMany(targetEntity="\Sylius\Component\Channel\Model\Channel")
      * @ORM\JoinTable(
-     *     name="mbiz_homepage_homepage_channels",
+     *     name="monsieurbiz_homepage_homepage_channels",
      *     joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="channel_id", referencedColumnName="id", unique=true)}
      * )

@@ -37,7 +37,7 @@ jobs:
       - name: Run standalone symfony flex server
         run: |
           echo ${{ github.token }} | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-          docker run --rm --name flex -d -v $PWD/plugin/recipes:/var/www/flex/var/repo/private/monsieurbiz/sylius-cms-page-plugin -p 80:80 docker.pkg.github.com/monsieurbiz/docker/symfony-flex-server:latest contrib official
+          docker run --rm --name flex -d -v $PWD/plugin/recipes:/var/www/flex/var/repo/private/monsieurbiz/sylius-homepage-plugin -p 80:80 docker.pkg.github.com/monsieurbiz/docker/symfony-flex-server:latest contrib official
           docker ps
 
       - uses: actions/cache@v1
@@ -71,7 +71,7 @@ jobs:
       - name: Install monsieurbiz/sylius-rich-editor-plugin
         working-directory: ./sylius
         run: |
-          composer require monsieurbiz/sylius-rich-editor-plugin="v2.0.0-RC.1" --no-scripts
+          composer require monsieurbiz/sylius-rich-editor-plugin="v2.0.0-RC.3" --no-scripts
           sed -i -e "s/];/MonsieurBiz\\\SyliusRichEditorPlugin\\\MonsieurBizSyliusRichEditorPlugin::class => ['all' => true], ];/g" config/bundles.php
           cp -Rv vendor/monsieurbiz/sylius-rich-editor-plugin/recipes/2.0-dev/config/* config/
 

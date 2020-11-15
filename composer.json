@@ -9,7 +9,8 @@
         "sylius/sylius": "^1.8",
         "gedmo/doctrine-extensions": "^2.4.12",
         "monsieurbiz/sylius-rich-editor-plugin": "^2.0@RC",
-        "phpstan/phpstan-webmozart-assert": "^0.12.7"
+        "phpstan/phpstan-webmozart-assert": "^0.12.7",
+        "phpmd/phpmd": "@stable"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -68,6 +69,7 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
-        "phpcs": "php-cs-fixer fix --using-cache=false"
+        "phpcs": "php-cs-fixer fix --using-cache=false",
+        "phpmd": "phpmd src/ ansi phpmd.xml"
     }
 }

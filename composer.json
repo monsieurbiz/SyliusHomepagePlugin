@@ -9,8 +9,7 @@
         "sylius/sylius": "^1.8",
         "gedmo/doctrine-extensions": "^2.4.12",
         "monsieurbiz/sylius-rich-editor-plugin": "^2.0@RC",
-        "phpstan/phpstan-webmozart-assert": "^0.12.7",
-        "phpmd/phpmd": "@stable"
+        "phpstan/phpstan-webmozart-assert": "^0.12.7"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -44,7 +43,8 @@
         "symfony/debug-bundle": "^4.4",
         "symfony/dotenv": "^4.4",
         "symfony/flex": "^1.7",
-        "symfony/web-profiler-bundle": "^4.4"
+        "symfony/web-profiler-bundle": "^4.4",
+        "phpmd/phpmd": "@stable"
     },
     "prefer-stable": true,
     "autoload": {

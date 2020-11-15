@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of Monsieur Biz' Homepage plugin for Sylius.
+ *
+ * (c) Monsieur Biz <sylius@monsieurbiz.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Repository;
 
 use Doctrine\ORM\QueryBuilder;
-use MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage\Homepage;
+use MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
 
@@ -13,6 +22,7 @@ class HomepageRepository extends EntityRepository
 {
     /**
      * @param string $localeCode
+     *
      * @return QueryBuilder
      */
     public function createListQueryBuilder(string $localeCode): QueryBuilder
@@ -24,7 +34,15 @@ class HomepageRepository extends EntityRepository
         ;
     }
 
-    public function findOneByChannelAndLocale(ChannelInterface $channel, string $locale): ?Homepage
+    /**
+     * @param ChannelInterface $channel
+     * @param string $locale
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * @return HomepageInterface|null
+     */
+    public function findOneByChannelAndLocale(ChannelInterface $channel, string $locale): ?HomepageInterface
     {
         return $this->createQueryBuilder('o')
             ->addSelect('translation')

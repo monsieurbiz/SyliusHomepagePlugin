@@ -1,10 +1,9 @@
-name: Makefile
+name: Tests
 
 on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ master ]
   schedule:
     - cron:  '0 0 * * *'
 
@@ -17,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.2]
+        php: [7.4]
 
     env:
       SYMFONY_ARGS: --no-tls
@@ -36,7 +35,7 @@ jobs:
       - name: Install symfony CLI
         run: |
           curl https://get.symfony.com/cli/installer | bash
-          echo "::add-path::${HOME}/.symfony/bin"
+          echo "${HOME}/.symfony/bin" >> $GITHUB_PATH
 
       - uses: actions/cache@v1
         id: cache-composer
@@ -48,4 +47,28 @@ jobs:
       - run: mkdir -p /home/runner/.composer/cache
         if: steps.cache-composer.outputs.cache-hit != 'true'
 
-#      - run: make install
+      - name: Composer v1
+        run: sudo composer self-update --1
+
+      - name: Composer Github Auth
+        run: composer config -g github-oauth.github.com ${{ github.token }}
+
+      - run: make install
+
+      - run: make test.composer
+
+      - run: make test.phpcs
+
+      - run: make test.phpunit
+
+      - run: make test.phpstan
+
+      - run: make test.phpspec
+
+      - run: make test.yaml
+
+      - run: make test.twig
+
+      - run: make test.schema
+
+      #- run: make test.container

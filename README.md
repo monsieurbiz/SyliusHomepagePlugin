@@ -15,7 +15,6 @@
 <!--
 [![Homepage Plugin license](https://img.shields.io/github/license/monsieurbiz/SyliusHomepagePlugin?public)](https://github.com/monsieurbiz/SyliusHomepagePlugin/blob/master/LICENSE)
 ![Tests](https://github.com/monsieurbiz/SyliusHomepagePlugin/workflows/CI/badge.svg)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/monsieurbiz/SyliusHomepagePlugin/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/monsieurbiz/SyliusHomepagePlugin/?branch=master)
 -->
 
 This plugins allows you to manage your homepage with a powerful editor.

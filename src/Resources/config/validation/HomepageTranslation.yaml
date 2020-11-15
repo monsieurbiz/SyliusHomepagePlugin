@@ -1,0 +1,12 @@
+MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageTranslation:
+    properties:
+        name:
+            -   NotBlank:
+                    groups: [monsieurbiz]
+            -   Length:
+                    min: 2
+                    max: 255
+                    groups: [monsieurbiz]
+        content:
+            -   NotBlank:
+                    groups: [monsieurbiz]

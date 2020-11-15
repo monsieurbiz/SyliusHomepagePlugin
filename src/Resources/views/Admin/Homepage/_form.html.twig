@@ -1,0 +1,19 @@
+{% from '@SyliusAdmin/Macro/translationForm.html.twig' import translationForm %}
+
+{% set translationsForm = form.translations %}
+{{ form.offsetUnset('translations') }}
+
+<h4 class="ui horizontal divider header">
+    <i class="info icon"></i>
+    {{ 'monsieurbiz_homepage.ui.form.homepage_info' | trans }}
+</h4>
+<div class="ui segment">
+    {{ form_errors(form) }}
+    {{ form_rest(form) }}
+</div>
+<h4 class="ui horizontal divider header">
+    <i class="flag icon"></i>
+    {{ 'monsieurbiz_homepage.ui.form.homepage_content' | trans }}
+</h4>
+
+{{ translationForm(translationsForm) }}

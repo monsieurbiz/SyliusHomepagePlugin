@@ -3,6 +3,7 @@
 /public/js
 /public/media
 !/public/media/image/.gitkeep
+/public/build
 
 /node_modules
 
@@ -20,7 +21,9 @@
 /.env.*.local
 /.env.local
 /.env.local.php
+/config/secrets/prod/prod.decrypt.private.php
 /public/bundles
+/src/.preload.php
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -30,6 +33,11 @@
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
 
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
 ###> phpunit/phpunit ###
 /phpunit.xml
+.phpunit.result.cache
 ###< phpunit/phpunit ###

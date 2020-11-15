@@ -1,0 +1,4 @@
+MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage:
+    properties:
+        translations:
+            -   Valid: ~

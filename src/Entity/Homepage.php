@@ -1,25 +1,34 @@
 <?php
+
+/*
+ * This file is part of Monsieur Biz' Homepage plugin for Sylius.
+ *
+ * (c) Monsieur Biz <sylius@monsieurbiz.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
-namespace MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage;
+namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
 
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Channel\Model\ChannelInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\Model\TimestampableTrait;
-use Sylius\Component\Resource\Model\TranslatableInterface;
-use Sylius\Component\Resource\Model\TranslatableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Sylius\Component\Channel\Model\ChannelInterface;
+use Sylius\Component\Resource\Model\TimestampableTrait;
+use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
+use Webmozart\Assert\Assert;
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="mbiz_homepage_homepage")
+ * @ORM\Entity
+ * @ORM\Table(name="monsieurbiz_homepage_homepage")
  */
-class Homepage implements ResourceInterface, TranslatableInterface
+class Homepage implements HomepageInterface
 {
     use TimestampableTrait;
     use TranslatableTrait {
@@ -30,17 +39,17 @@ class Homepage implements ResourceInterface, TranslatableInterface
     /**
      * @var int|null
      *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @var Collection
+     * @var Collection<int, ChannelInterface>
      * @ORM\ManyToMany(targetEntity="\Sylius\Component\Channel\Model\Channel")
      * @ORM\JoinTable(
-     *     name="mbiz_homepage_homepage_channels",
+     *     name="monsieurbiz_homepage_homepage_channels",
      *     joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="channel_id", referencedColumnName="id", unique=true)}
      * )
@@ -62,7 +71,7 @@ class Homepage implements ResourceInterface, TranslatableInterface
     protected $updatedAt;
 
     /**
-     * Page constructor.
+     * Homepage constructor.
      */
     public function __construct()
     {
@@ -79,7 +88,7 @@ class Homepage implements ResourceInterface, TranslatableInterface
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, ChannelInterface>
      */
     public function getChannels(): Collection
     {
@@ -107,6 +116,11 @@ class Homepage implements ResourceInterface, TranslatableInterface
         $this->channels = new ArrayCollection();
     }
 
+    /**
+     * @param ChannelInterface $channel
+     *
+     * @return bool
+     */
     public function hasChannel(ChannelInterface $channel): bool
     {
         return $this->channels->contains($channel);
@@ -122,6 +136,7 @@ class Homepage implements ResourceInterface, TranslatableInterface
 
     /**
      * @param string|null $name
+     *
      * @return void
      */
     public function setName(?string $name): void
@@ -139,6 +154,7 @@ class Homepage implements ResourceInterface, TranslatableInterface
 
     /**
      * @param string|null $content
+     *
      * @return void
      */
     public function setContent(?string $content): void
@@ -156,6 +172,7 @@ class Homepage implements ResourceInterface, TranslatableInterface
 
     /**
      * @param string|null $metaTitle
+     *
      * @return void
      */
     public function setMetaTitle(?string $metaTitle): void
@@ -173,6 +190,7 @@ class Homepage implements ResourceInterface, TranslatableInterface
 
     /**
      * @param string|null $metaDescription
+     *
      * @return void
      */
     public function setMetaDescription(?string $metaDescription): void
@@ -190,6 +208,7 @@ class Homepage implements ResourceInterface, TranslatableInterface
 
     /**
      * @param string|null $metaKeywords
+     *
      * @return void
      */
     public function setMetaKeywords(?string $metaKeywords): void
@@ -198,7 +217,7 @@ class Homepage implements ResourceInterface, TranslatableInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createTranslation(): HomepageTranslation
     {
@@ -208,12 +227,12 @@ class Homepage implements ResourceInterface, TranslatableInterface
     /**
      * @param string|null $locale
      *
-     * @return HomepageTranslation
+     * @return HomepageTranslationInterface
      */
     public function getTranslation(?string $locale = null): TranslationInterface
     {
-        /** @var HomepageTranslation $translation */
         $translation = $this->doGetTranslation($locale);
+        Assert::isInstanceOf($translation, HomepageTranslationInterface::class);
 
         return $translation;
     }

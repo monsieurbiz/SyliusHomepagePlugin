@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Monsieur Biz' Homepage plugin for Sylius.
+ *
+ * (c) Monsieur Biz <sylius@monsieurbiz.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Form\Type;
@@ -8,7 +17,6 @@ use MonsieurBiz\SyliusRichEditorPlugin\Form\Type\RichEditorType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class HomepageTranslationType extends AbstractResourceType
 {
@@ -19,42 +27,26 @@ class HomepageTranslationType extends AbstractResourceType
     {
         $builder
             ->add('content', RichEditorType::class, [
-                'required' => true,
                 'label' => 'monsieurbiz_homepage.ui.form.content',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
             ])
             ->add('name', TextType::class, [
-                'required' => true,
                 'label' => 'monsieurbiz_homepage.ui.form.name',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
             ])
             ->add('metaTitle', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'monsieurbiz_homepage.ui.form.meta_title',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
             ])
             ->add('metaDescription', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'monsieurbiz_homepage.ui.form.meta_description',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
             ])
             ->add('metaKeywords', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'monsieurbiz_homepage.ui.form.meta_keywords',
-                'constraints' => [
-                    new Assert\NotBlank([])
-                ],
             ])
         ;
     }
+
     /**
      * {@inheritdoc}
      */

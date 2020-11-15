@@ -1,18 +1,26 @@
 <?php
+
+/*
+ * This file is part of Monsieur Biz' Homepage plugin for Sylius.
+ *
+ * (c) Monsieur Biz <sylius@monsieurbiz.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
-namespace MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage;
+namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\AbstractTranslation;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\Model\TranslationInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="mbiz_homepage_homepage_translation")
+ * @ORM\Table(name="monsieurbiz_homepage_homepage_translation")
  */
-class HomepageTranslation extends AbstractTranslation implements ResourceInterface, TranslationInterface
+class HomepageTranslation extends AbstractTranslation implements HomepageTranslationInterface
 {
     /**
      * @var int
@@ -29,7 +37,6 @@ class HomepageTranslation extends AbstractTranslation implements ResourceInterfa
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $name;
-
 
     /**
      * @var string|null
@@ -102,6 +109,7 @@ class HomepageTranslation extends AbstractTranslation implements ResourceInterfa
 
     /**
      * @param string|null $content
+     *
      * @return void
      */
     public function setContent(?string $content): void
@@ -119,6 +127,7 @@ class HomepageTranslation extends AbstractTranslation implements ResourceInterfa
 
     /**
      * @param string|null $metaTitle
+     *
      * @return void
      */
     public function setMetaTitle(?string $metaTitle): void
@@ -136,6 +145,7 @@ class HomepageTranslation extends AbstractTranslation implements ResourceInterfa
 
     /**
      * @param string|null $metaDescription
+     *
      * @return void
      */
     public function setMetaDescription(?string $metaDescription): void
@@ -153,6 +163,7 @@ class HomepageTranslation extends AbstractTranslation implements ResourceInterfa
 
     /**
      * @param string|null $metaKeywords
+     *
      * @return void
      */
     public function setMetaKeywords(?string $metaKeywords): void

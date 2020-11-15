@@ -4,7 +4,7 @@ APP_DIR=tests/Application
 SYMFONY=cd ${APP_DIR} && symfony
 COMPOSER=symfony composer
 CONSOLE=${SYMFONY} console
-export COMPOSE_PROJECT_NAME=cms-homepage
+export COMPOSE_PROJECT_NAME=homepage
 COMPOSE=docker-compose
 YARN=yarn
 PHPSTAN=symfony php vendor/bin/phpstan
@@ -93,7 +93,7 @@ test.schema: ## Validate MySQL Schema
 	${CONSOLE} doctrine:schema:validate
 
 test.twig: ## Validate Twig templates
-	${CONSOLE} lint:twig -e prod --no-debug templates/ ../../src/Resources/views/
+	${CONSOLE} lint:twig -e prod --no-debug ../../src/Resources/views/
 
 ###
 ### SYLIUS

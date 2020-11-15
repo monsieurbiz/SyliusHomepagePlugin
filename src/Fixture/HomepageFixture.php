@@ -31,11 +31,12 @@ class HomepageFixture extends AbstractResourceFixture
      */
     protected function configureResourceNode(ArrayNodeDefinition $resourceNode): void
     {
+        /** @phpstan-ignore-next-line */
         $resourceNode
             ->children()
                 ->arrayNode('channels')->scalarPrototype()->end()->end()
                 ->arrayNode('translations')
-                    ->prototype('array')
+                    ->arrayPrototype()
                         ->children()
                             ->scalarNode('name')->cannotBeEmpty()->end()
                             ->scalarNode('content')->cannotBeEmpty()->end()

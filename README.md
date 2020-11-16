@@ -19,7 +19,7 @@ This plugins allows you to manage your homepages using the Rich Editor.
 
 If you want to know more about our editor, see the [Rich Editor Repository](https://github.com/monsieurbiz/SyliusRichEditorPlugin)
 
-![Example of CMS homepage creation](screenshots/demo.gif)
+![Example of homepage edition](screenshots/demo.gif)
 
 ## Installation
 
@@ -38,14 +38,14 @@ return [
 ];
 ```
 
-Then create the config file in `config/packages/monsieurbiz_sylius_cms_page_plugin.yaml` :
+Then create the config file in `config/packages/monsieurbiz_sylius_homepage_plugin.yaml` :
 
 ```yaml
 imports:
     - { resource: "@MonsieurBizSyliusHomepagePlugin/Resources/config/config.yaml" }
 ```
 
-Finally import the routes in `config/routes/monsieurbiz_sylius_cms_page_plugin.yaml` : 
+Finally import the routes in `config/routes/monsieurbiz_sylius_homepage_plugin.yaml` : 
 
 ```yaml
 monsieurbiz_sylius_homepage_admin:

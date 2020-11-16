@@ -50,7 +50,7 @@ Finally import the routes in `config/routes/monsieurbiz_sylius_homepage_plugin.y
 ```yaml
 monsieurbiz_sylius_homepage_admin:
     resource: "@MonsieurBizSyliusHomepagePlugin/Resources/config/routes/admin.yaml"
-    prefix: /admin
+    prefix: /%sylius_admin.path_name%
 monsieurbiz_sylius_homepage_homepage:
     path: /
     methods: [GET]

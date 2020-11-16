@@ -12,7 +12,7 @@
 
 <h1 align="center">Homepages</h1>
 
-[![Homepage Plugin license](https://img.shields.io/github/license/monsieurbiz/SyliusHomepagePlugin?public)](https://github.com/monsieurbiz/SyliusHomepagePlugin/blob/master/LICENCE.txt)
+[![Homepage Plugin license](https://img.shields.io/github/license/monsieurbiz/SyliusHomepagePlugin?public)](https://github.com/monsieurbiz/SyliusHomepagePlugin/blob/master/LICENSE.txt)
 [![Build Status](https://img.shields.io/github/workflow/status/monsieurbiz/SyliusHomepagePlugin/Tests)](https://github.com/monsieurbiz/SyliusHomepagePlugin/actions?query=workflow%3ATests)
 
 This plugins allows you to manage your homepages using the Rich Editor.

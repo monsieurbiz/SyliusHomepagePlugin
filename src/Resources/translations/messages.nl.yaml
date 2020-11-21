@@ -1,8 +1,8 @@
 monsieurbiz_homepage:
   ui:
     cms_content: 'Inhoud van CMS'
-    homepages: "Homepagina's"
-    homepages_subheader: "Beheer je homepagina's"
+    homepages: 'Homepagina''s'
+    homepages_subheader: 'Beheer je homepagina''s'
     new_homepage: 'Nieuwe homepagina'
     edit_homepage: 'Homepagina bewerken'
     form:

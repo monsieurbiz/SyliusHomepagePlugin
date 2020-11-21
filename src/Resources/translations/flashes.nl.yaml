@@ -1,0 +1,4 @@
+sylius:
+    resource:
+        monsieurbiz_homepage:
+            unique_channel: "Je kan niet meerdere homepagina's hebben voor hetzelfde kanaal."

@@ -1,17 +1,17 @@
 monsieurbiz_homepage:
-  ui:
-    cms_content: 'Inhoud van CMS'
-    homepages: 'Homepagina''s'
-    homepages_subheader: 'Beheer je homepagina''s'
-    new_homepage: 'Nieuwe homepagina'
-    edit_homepage: 'Homepagina bewerken'
-    form:
-      name: 'Naam'
-      content: 'Inhoud'
-      channels: 'Channels'
-      meta_title: 'Meta titel'
-      meta_description: 'Meta omschrijving'
-      meta_keywords: 'Meta keywords'
-      id: 'ID'
-    actions:
-      create: 'Nieuwe homepagina'
+    ui:
+        cms_content: 'Inhoud van CMS'
+        homepages: 'Homepagina''s'
+        homepages_subheader: 'Beheer je homepagina''s'
+        new_homepage: 'Nieuwe homepagina'
+        edit_homepage: 'Homepagina bewerken'
+        form:
+            name: 'Naam'
+            content: 'Inhoud'
+            channels: 'Channels'
+            meta_title: 'Meta titel'
+            meta_description: 'Meta omschrijving'
+            meta_keywords: 'Meta keywords'
+            id: 'ID'
+        actions:
+            create: 'Nieuwe homepagina'

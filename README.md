@@ -51,8 +51,9 @@ Finally import the routes in `config/routes/monsieurbiz_sylius_homepage_plugin.y
 monsieurbiz_sylius_homepage_admin:
     resource: "@MonsieurBizSyliusHomepagePlugin/Resources/config/routes/admin.yaml"
     prefix: /%sylius_admin.path_name%
+
 monsieurbiz_sylius_homepage_homepage:
-    prefix: /{_locale}
+    path: /{_locale}/
     methods: [GET]
     requirements:
         _locale: ^[a-z]{2}(?:_[A-Z]{2})?$

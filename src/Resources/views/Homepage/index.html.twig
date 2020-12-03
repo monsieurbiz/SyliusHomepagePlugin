@@ -27,7 +27,7 @@
         <div class="ui hidden divider"></div>
 
         {% if homepages is not empty %}
-            {{ homepages.content | monsieurbiz_richeditor_render_element }}
+            {{ homepages.content | monsieurbiz_richeditor_render_field }}
         {% else %}
             {{ sylius_template_event('sylius.shop.homepage') }}
         {% endif %}

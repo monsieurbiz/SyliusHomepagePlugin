@@ -10,58 +10,99 @@
     <img src="https://monsieurbiz.com/assets/images/sylius_badge_extension-artisan.png" width="100" alt="Monsieur Biz is a Sylius Extension Artisan partner">
 </p>
 
-<h1 align="center">Homepage management for Sylius</h1>
+<h1 align="center">Homepages</h1>
 
-<!--
-[![Homepage Plugin license](https://img.shields.io/github/license/monsieurbiz/SyliusHomepagePlugin?public)](https://github.com/monsieurbiz/SyliusHomepagePlugin/blob/master/LICENSE)
-![Tests](https://github.com/monsieurbiz/SyliusHomepagePlugin/workflows/CI/badge.svg)
--->
+[![Homepage Plugin license](https://img.shields.io/github/license/monsieurbiz/SyliusHomepagePlugin?public)](https://github.com/monsieurbiz/SyliusHomepagePlugin/blob/master/LICENSE.txt)
+[![Build Status](https://img.shields.io/github/workflow/status/monsieurbiz/SyliusHomepagePlugin/Tests)](https://github.com/monsieurbiz/SyliusHomepagePlugin/actions?query=workflow%3ATests)
 
-This plugins allows you to manage your homepage with a powerful editor.
+This plugins allows you to manage your homepages using the Rich Editor.
+
+If you want to know more about our editor, see the [Rich Editor Repository](https://github.com/monsieurbiz/SyliusRichEditorPlugin)
+
+![Example of homepage edition](screenshots/demo.gif)
 
 ## Installation
 
-⚠️ This plugin is not released yet.
+```bash
+composer require monsieurbiz/sylius-homepage-plugin
+```
 
-To Be Defined
+Change your `config/bundles.php` file to add the line for the plugin : 
 
-<!--
+```php
+<?php
 
-**Beware!**
+return [
+    //..
+    MonsieurBiz\SyliusHomepagePlugin\MonsieurBizSyliusHomepagePlugin::class => ['all' => true],
+];
+```
 
-> This installation instruction assumes that you're using Symfony Flex.
+Then create the config file in `config/packages/monsieurbiz_sylius_homepage_plugin.yaml` :
 
-1. Require the plugin using composer
+```yaml
+imports:
+    - { resource: "@MonsieurBizSyliusHomepagePlugin/Resources/config/config.yaml" }
+```
 
-    ```bash
-    composer require monsieurbiz/sylius-homepage-plugin
-    ```
+Finally import the routes in `config/routes/monsieurbiz_sylius_homepage_plugin.yaml` : 
 
-2. Generate & Run Doctrine migrations
+```yaml
+monsieurbiz_sylius_homepage_admin:
+    resource: "@MonsieurBizSyliusHomepagePlugin/Resources/config/routes/admin.yaml"
+    prefix: /%sylius_admin.path_name%
 
-    ```
-    ./bin/console doctrine:migration:diff
-    ./bin/console doctrine:migration:migrate
-    ```
--->
+monsieurbiz_sylius_homepage_homepage:
+    path: /{_locale}/
+    methods: [GET]
+    requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+    defaults:
+        _controller: monsieurbiz_homepage.controller.homepage:indexAction
+        _sylius:
+            template: '@MonsieurBizSyliusHomepagePlugin/Homepage/index.html.twig'
+            repository:
+                method: findOneByChannelAndLocale
+                arguments:
+                    - "expr:service('sylius.context.channel').getChannel()"
+                    - "expr:service('sylius.context.locale').getLocaleCode()"
+```
 
-## How it works
+### Migrations
 
-To Be Defined
+Make a doctrine migration diff : 
 
-## Testing
+```php
+bin/console doctrine:migrations:diff
+```
 
-To Be Defined
+Then run it : 
 
-<!-- See [TESTING.md](TESTING.md). -->
+```php
+bin/console doctrine:migrations:migrate
+```
+
+## Example of complete homepage
+
+### Admin form with preview
+
+![Admin full form](screenshots/full_back.jpg)
+
+### Front display
+
+![Front full display](screenshots/full_front.jpg)
+
+## Create custom elements
+
+You can customize and create custom elements in your page.  
+In order to do that, you can check the [Rich Editor custom element creation](https://github.com/monsieurbiz/SyliusRichEditorPlugin#create-your-own-elements)
+
+## SEO Friendly
+
+You can define for your homepage the meta title, meta description and meta 
+keywords.
 
 ## Contributing
 
-You can find a way to run the plugin without effort in the file [DEVELOPMENT.md](./DEVELOPMENT.md).
-
-Then you can open an issue or a Pull Request if you want! 😘  
+You can open an issue or a Pull Request if you want! 😘  
 Thank you!
-
-## License
-
-This plugin is completely free and released under the [MIT License](https://github.com/monsieurbiz/SyliusHomepagePlugin/blob/master/LICENSE).

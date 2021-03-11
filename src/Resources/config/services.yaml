@@ -34,5 +34,6 @@ services:
     # Fixtures
     MonsieurBiz\SyliusHomepagePlugin\Fixture\HomepageFixture:
         arguments:
+            $objectManager: '@doctrine.orm.default_entity_manager'
             $exampleFactory: '@MonsieurBiz\SyliusHomepagePlugin\Fixture\Factory\HomepageFixtureFactory'
 

@@ -1,4 +1,10 @@
 {
+    "aeon-php/calendar": {
+        "version": "0.16.1"
+    },
+    "alcohol/iso4217": {
+        "version": "3.1.5"
+    },
     "amphp/amp": {
         "version": "v2.5.1"
     },
@@ -18,6 +24,9 @@
             "config/routes/api_platform.yaml",
             "src/Entity/.gitignore"
         ]
+    },
+    "babdev/pagerfanta-bundle": {
+        "version": "v2.9.0"
     },
     "behat/behat": {
         "version": "v3.8.1"
@@ -140,6 +149,9 @@
     "doctrine/reflection": {
         "version": "1.2.2"
     },
+    "doctrine/sql-formatter": {
+        "version": "1.1.1"
+    },
     "egulias/email-validator": {
         "version": "2.1.23"
     },
@@ -151,6 +163,9 @@
     },
     "ergebnis/json-printer": {
         "version": "3.1.1"
+    },
+    "fakerphp/faker": {
+        "version": "v1.13.0"
     },
     "felixfbecker/advanced-json-rpc": {
         "version": "v3.1.1"
@@ -202,6 +217,9 @@
         "files": [
             ".php_cs.dist"
         ]
+    },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
     },
     "friendsofsymfony/oauth-server-bundle": {
         "version": "1.6.2"
@@ -313,6 +331,9 @@
     },
     "lchrusciel/api-test-case": {
         "version": "v5.0.0"
+    },
+    "lcobucci/clock": {
+        "version": "2.0.0"
     },
     "lcobucci/jwt": {
         "version": "3.3.3"
@@ -712,6 +733,12 @@
     "sylius-labs/polyfill-symfony-event-dispatcher": {
         "version": "v1.0.1"
     },
+    "sylius-labs/polyfill-symfony-framework-bundle": {
+        "version": "v1.0.0"
+    },
+    "sylius-labs/polyfill-symfony-security": {
+        "version": "v1.0.0"
+    },
     "sylius/fixtures-bundle": {
         "version": "v1.7.0"
     },
@@ -732,6 +759,9 @@
     },
     "sylius/theme-bundle": {
         "version": "v1.5.1"
+    },
+    "symfony/amqp-messenger": {
+        "version": "v5.2.4"
     },
     "symfony/asset": {
         "version": "v4.4.16"
@@ -787,6 +817,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v4.4.15"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.2.5"
     },
     "symfony/dom-crawler": {
         "version": "v5.1.8"
@@ -946,6 +979,9 @@
     },
     "symfony/proxy-manager-bridge": {
         "version": "v4.4.16"
+    },
+    "symfony/redis-messenger": {
+        "version": "v5.2.4"
     },
     "symfony/routing": {
         "version": "4.2",

@@ -16,7 +16,6 @@ namespace MonsieurBiz\SyliusHomepagePlugin\Fixture\Factory;
 use MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageInterface;
 use MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageTranslationInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
-use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
 use Sylius\Bundle\CoreBundle\Fixture\OptionsResolver\LazyOption;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
@@ -24,7 +23,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class HomepageFixtureFactory extends AbstractExampleFactory implements ExampleFactoryInterface
+class HomepageFixtureFactory extends AbstractExampleFactory implements HomepageFixtureFactoryInterface
 {
     /**
      * @var FactoryInterface

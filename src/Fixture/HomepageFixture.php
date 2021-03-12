@@ -13,11 +13,18 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Fixture;
 
+use Doctrine\ORM\EntityManagerInterface;
+use MonsieurBiz\SyliusHomepagePlugin\Fixture\Factory\HomepageFixtureFactoryInterface;
 use Sylius\Bundle\CoreBundle\Fixture\AbstractResourceFixture;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 class HomepageFixture extends AbstractResourceFixture
 {
+    public function __construct(EntityManagerInterface $homepageManager, HomepageFixtureFactoryInterface $exampleFactory)
+    {
+        parent::__construct($homepageManager, $exampleFactory);
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -20,6 +20,10 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 class HomepageFixture extends AbstractResourceFixture
 {
+    /**
+     * @param EntityManagerInterface $homepageManager
+     * @param HomepageFixtureFactoryInterface $exampleFactory
+     */
     public function __construct(EntityManagerInterface $homepageManager, HomepageFixtureFactoryInterface $exampleFactory)
     {
         parent::__construct($homepageManager, $exampleFactory);

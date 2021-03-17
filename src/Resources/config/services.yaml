@@ -31,8 +31,3 @@ services:
             $dataClass: '%monsieurbiz_homepage.model.homepage_translation.class%'
             $validationGroups: ['monsieurbiz']
 
-    # Fixtures
-    MonsieurBiz\SyliusHomepagePlugin\Fixture\HomepageFixture:
-        arguments:
-            $exampleFactory: '@MonsieurBiz\SyliusHomepagePlugin\Fixture\Factory\HomepageFixtureFactory'
-

@@ -71,7 +71,7 @@ class HomepageTranslation extends AbstractTranslation implements HomepageTransla
      *
      * @var string|null
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     protected $locale;
 

@@ -21,6 +21,11 @@ jobs:
       matrix:
         php: ['7.4', '8.0']
         sylius: ['1.8', '1.9', '1.10']
+        exclude:
+          - php: '8.0'
+            sylius: '1.8'
+          - php: '8.0'
+            sylius: '1.9'
 
     steps:
       - name: Setup PHP

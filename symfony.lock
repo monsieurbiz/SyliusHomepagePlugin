@@ -185,6 +185,9 @@
     "friends-of-behat/mink-browserkit-driver": {
         "version": "v1.4.0"
     },
+    "friends-of-behat/mink-debug-extension": {
+        "version": "v2.0.1"
+    },
     "friends-of-behat/mink-extension": {
         "version": "v2.4.0"
     },
@@ -328,6 +331,9 @@
     },
     "laminas/laminas-eventmanager": {
         "version": "3.3.0"
+    },
+    "laminas/laminas-stdlib": {
+        "version": "3.6.0"
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
@@ -631,6 +637,9 @@
     "ramsey/uuid": {
         "version": "3.9.3"
     },
+    "rector/rector": {
+        "version": "0.11.52"
+    },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
     },
@@ -720,6 +729,9 @@
         "files": [
             "config/packages/stof_doctrine_extensions.yaml"
         ]
+    },
+    "stripe/stripe-php": {
+        "version": "v6.43.1"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.3"
@@ -938,6 +950,9 @@
     "symfony/options-resolver": {
         "version": "v4.4.16"
     },
+    "symfony/password-hasher": {
+        "version": "v5.3.7"
+    },
     "symfony/polyfill-ctype": {
         "version": "v1.20.0"
     },
@@ -973,6 +988,9 @@
     },
     "symfony/polyfill-php80": {
         "version": "v1.20.0"
+    },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
     },
     "symfony/process": {
         "version": "v4.4.16"

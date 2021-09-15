@@ -11,6 +11,7 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 HEADER;
 
+
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude('tests/Application/var')
@@ -18,7 +19,8 @@ $finder = PhpCsFixer\Finder::create()
         'tests/Application/bin/console',
     ]);
 
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+$config
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
@@ -117,4 +119,7 @@ return PhpCsFixer\Config::create()
         ],
         'void_return' => true,
     ])
-    ->setFinder($finder);
+    ->setFinder($finder)
+;
+
+return $config;

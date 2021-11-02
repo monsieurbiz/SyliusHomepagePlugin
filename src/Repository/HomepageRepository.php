@@ -20,11 +20,6 @@ use Sylius\Component\Core\Model\ChannelInterface;
 
 class HomepageRepository extends EntityRepository
 {
-    /**
-     * @param string $localeCode
-     *
-     * @return QueryBuilder
-     */
     public function createListQueryBuilder(string $localeCode): QueryBuilder
     {
         return $this->createQueryBuilder('o')
@@ -35,12 +30,7 @@ class HomepageRepository extends EntityRepository
     }
 
     /**
-     * @param ChannelInterface $channel
-     * @param string $locale
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
-     *
-     * @return HomepageInterface|null
      */
     public function findOneByChannelAndLocale(ChannelInterface $channel, string $locale): ?HomepageInterface
     {

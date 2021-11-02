@@ -31,8 +31,10 @@ use Webmozart\Assert\Assert;
 class Homepage implements HomepageInterface
 {
     use TimestampableTrait;
+
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
+
         getTranslation as private doGetTranslation;
     }
 
@@ -79,9 +81,6 @@ class Homepage implements HomepageInterface
         $this->initializeChannelsCollection();
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
@@ -95,17 +94,11 @@ class Homepage implements HomepageInterface
         return $this->channels;
     }
 
-    /**
-     * @param ChannelInterface $channel
-     */
     public function addChannel(ChannelInterface $channel): void
     {
         $this->channels->add($channel);
     }
 
-    /**
-     * @param ChannelInterface $channel
-     */
     public function removeChannel(ChannelInterface $channel): void
     {
         $this->channels->removeElement($channel);
@@ -116,108 +109,63 @@ class Homepage implements HomepageInterface
         $this->channels = new ArrayCollection();
     }
 
-    /**
-     * @param ChannelInterface $channel
-     *
-     * @return bool
-     */
     public function hasChannel(ChannelInterface $channel): bool
     {
         return $this->channels->contains($channel);
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->getTranslation()->getName();
     }
 
-    /**
-     * @param string|null $name
-     *
-     * @return void
-     */
     public function setName(?string $name): void
     {
         $this->getTranslation()->setName($name);
     }
 
-    /**
-     * @return string|null
-     */
     public function getContent(): ?string
     {
         return $this->getTranslation()->getContent();
     }
 
-    /**
-     * @param string|null $content
-     *
-     * @return void
-     */
     public function setContent(?string $content): void
     {
         $this->getTranslation()->setContent($content);
     }
 
-    /**
-     * @return string|null
-     */
     public function getMetaTitle(): ?string
     {
         return $this->getTranslation()->getMetaTitle();
     }
 
-    /**
-     * @param string|null $metaTitle
-     *
-     * @return void
-     */
     public function setMetaTitle(?string $metaTitle): void
     {
         $this->getTranslation()->setMetaTitle($metaTitle);
     }
 
-    /**
-     * @return string|null
-     */
     public function getMetaDescription(): ?string
     {
         return $this->getTranslation()->getMetaDescription();
     }
 
-    /**
-     * @param string|null $metaDescription
-     *
-     * @return void
-     */
     public function setMetaDescription(?string $metaDescription): void
     {
         $this->getTranslation()->setMetaDescription($metaDescription);
     }
 
-    /**
-     * @return string|null
-     */
     public function getMetaKeywords(): ?string
     {
         return $this->getTranslation()->getMetaKeywords();
     }
 
-    /**
-     * @param string|null $metaKeywords
-     *
-     * @return void
-     */
     public function setMetaKeywords(?string $metaKeywords): void
     {
         $this->getTranslation()->setMetaKeywords($metaKeywords);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function createTranslation(): HomepageTranslation
     {
@@ -225,8 +173,6 @@ class Homepage implements HomepageInterface
     }
 
     /**
-     * @param string|null $locale
-     *
      * @return HomepageTranslationInterface
      */
     public function getTranslation(?string $locale = null): TranslationInterface

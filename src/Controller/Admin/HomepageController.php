@@ -20,11 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HomepageController extends ResourceController
 {
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function createAction(Request $request): Response
     {
         try {
@@ -37,11 +32,6 @@ class HomepageController extends ResourceController
         }
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function updateAction(Request $request): Response
     {
         try {

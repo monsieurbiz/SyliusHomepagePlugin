@@ -5,7 +5,7 @@
  *
  * (c) Monsieur Biz <sylius@monsieurbiz.com>
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -75,97 +75,56 @@ class HomepageTranslation extends AbstractTranslation implements HomepageTransla
      */
     protected $locale;
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     */
     public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
-    /**
-     * @param string|null $content
-     *
-     * @return void
-     */
     public function setContent(?string $content): void
     {
         $this->content = $content;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMetaTitle(): ?string
     {
         return $this->metaTitle;
     }
 
-    /**
-     * @param string|null $metaTitle
-     *
-     * @return void
-     */
     public function setMetaTitle(?string $metaTitle): void
     {
         $this->metaTitle = $metaTitle;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }
 
-    /**
-     * @param string|null $metaDescription
-     *
-     * @return void
-     */
     public function setMetaDescription(?string $metaDescription): void
     {
         $this->metaDescription = $metaDescription;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMetaKeywords(): ?string
     {
         return $this->metaKeywords;
     }
 
-    /**
-     * @param string|null $metaKeywords
-     *
-     * @return void
-     */
     public function setMetaKeywords(?string $metaKeywords): void
     {
         $this->metaKeywords = $metaKeywords;

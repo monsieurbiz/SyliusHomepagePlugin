@@ -5,7 +5,7 @@
  *
  * (c) Monsieur Biz <sylius@monsieurbiz.com>
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -20,11 +20,6 @@ use Sylius\Component\Core\Model\ChannelInterface;
 
 class HomepageRepository extends EntityRepository
 {
-    /**
-     * @param string $localeCode
-     *
-     * @return QueryBuilder
-     */
     public function createListQueryBuilder(string $localeCode): QueryBuilder
     {
         return $this->createQueryBuilder('o')
@@ -35,12 +30,7 @@ class HomepageRepository extends EntityRepository
     }
 
     /**
-     * @param ChannelInterface $channel
-     * @param string $locale
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
-     *
-     * @return HomepageInterface|null
      */
     public function findOneByChannelAndLocale(ChannelInterface $channel, string $locale): ?HomepageInterface
     {

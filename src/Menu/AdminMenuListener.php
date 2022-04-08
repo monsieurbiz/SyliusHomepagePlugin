@@ -5,7 +5,7 @@
  *
  * (c) Monsieur Biz <sylius@monsieurbiz.com>
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -25,17 +25,12 @@ final class AdminMenuListener
 
     /**
      * AdminMenuListener constructor.
-     *
-     * @param MenuManipulator $manipulator
      */
     public function __construct(MenuManipulator $manipulator)
     {
         $this->manipulator = $manipulator;
     }
 
-    /**
-     * @param MenuBuilderEvent $event
-     */
     public function addAdminMenuItem(MenuBuilderEvent $event): void
     {
         $menu = $event->getMenu();

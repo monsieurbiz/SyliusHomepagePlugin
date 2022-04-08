@@ -3,8 +3,6 @@ name: Security
 on:
   push:
   pull_request:
-  schedule:
-    - cron:  '0 0 * * *'
 
 jobs:
 
@@ -43,9 +41,8 @@ jobs:
         run: composer config -g github-oauth.github.com ${{ github.token }}
 
       - uses: actions/checkout@v2
-    
+
       - name: Install PHP dependencies
         run: composer update --prefer-dist
 
       - uses: symfonycorp/security-checker-action@v2
-

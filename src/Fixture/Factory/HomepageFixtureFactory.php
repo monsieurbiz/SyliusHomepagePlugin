@@ -5,7 +5,7 @@
  *
  * (c) Monsieur Biz <sylius@monsieurbiz.com>
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -49,12 +49,6 @@ class HomepageFixtureFactory extends AbstractExampleFactory implements HomepageF
     /** @var ChannelRepositoryInterface */
     private $channelRepository;
 
-    /**
-     * @param FactoryInterface $homepageFactory
-     * @param FactoryInterface $homepageTranslationFactory
-     * @param ChannelRepositoryInterface $channelRepository
-     * @param RepositoryInterface $localeRepository
-     */
     public function __construct(
         FactoryInterface $homepageFactory,
         FactoryInterface $homepageTranslationFactory,
@@ -73,7 +67,7 @@ class HomepageFixtureFactory extends AbstractExampleFactory implements HomepageF
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function create(array $options = []): HomepageInterface
     {
@@ -91,10 +85,6 @@ class HomepageFixtureFactory extends AbstractExampleFactory implements HomepageF
         return $homepage;
     }
 
-    /**
-     * @param HomepageInterface $homepage
-     * @param array $options
-     */
     private function createTranslations(HomepageInterface $homepage, array $options): void
     {
         foreach ($options['translations'] as $localeCode => $translation) {
@@ -112,12 +102,12 @@ class HomepageFixtureFactory extends AbstractExampleFactory implements HomepageF
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setDefault('translations', function(OptionsResolver $translationResolver): void {
+            ->setDefault('translations', function (OptionsResolver $translationResolver): void {
                 $translationResolver->setDefaults($this->configureDefaultTranslations());
             })
             ->setDefault('channels', []) // No channel to avoid integrity constraint violation
@@ -126,9 +116,6 @@ class HomepageFixtureFactory extends AbstractExampleFactory implements HomepageF
         ;
     }
 
-    /**
-     * @return array
-     */
     private function configureDefaultTranslations(): array
     {
         $translations = [];

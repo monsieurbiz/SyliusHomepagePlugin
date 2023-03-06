@@ -73,7 +73,7 @@ class HomepageTranslation extends AbstractTranslation implements HomepageTransla
      *
      * @ORM\Column(type="string", length=10, nullable=true)
      */
-    protected $locale;
+    protected ?string $locale;
 
     public function getId(): ?int
     {

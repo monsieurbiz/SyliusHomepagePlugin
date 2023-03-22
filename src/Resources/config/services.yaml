@@ -10,7 +10,8 @@ services:
 
     MonsieurBiz\SyliusHomepagePlugin\:
         resource: '../../*'
-
+        exclude: '../../{Entity,Migrations}'
+        
     MonsieurBiz\SyliusHomepagePlugin\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']

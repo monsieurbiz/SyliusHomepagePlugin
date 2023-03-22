@@ -34,7 +34,7 @@ class Homepage implements HomepageInterface
      * @var int|null
      *
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Collection<int, ChannelInterface>

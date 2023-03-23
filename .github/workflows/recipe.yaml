@@ -18,20 +18,25 @@ jobs:
       fail-fast: false
       matrix:
         php: ['7.4' ,'8.0']
-        sylius: ["~1.8.0", "~1.9.0", "~1.10.0"]
+        sylius: ["~1.8.0", "~1.9.0", "~1.10.0", "~1.11.0"]
         exclude:
           - php: 8.0
             sylius: "~1.8.0"
           - php: 8.0
             sylius: "~1.9.0"
+          - php: 7.4
+            sylius: "~1.11.0"
 
     steps:
       - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          ini-values: date.timezone=UTC
+
+      - name: Set project php-version
         run: |
-          sudo update-alternatives --set php /usr/bin/php${{ matrix.php }}
-          echo "date.timezone=UTC" >> /tmp/timezone.ini
-          sudo mv /tmp/timezone.ini /etc/php/${{ matrix.php }}/cli/conf.d/timezone.ini
-          echo ${{ matrix.php }} > .php-version
+          echo "${{ matrix.php }}" > .php-version
 
       - uses: actions/checkout@v2
         with:
@@ -53,8 +58,8 @@ jobs:
           key: composer2-php:${{ matrix.php }}-sylius:${{ matrix.sylius }}-${{ github.sha }}
           restore-keys: composer2-php:${{ matrix.php }}-sylius:${{ matrix.sylius }}-
 
-      - name: Composer v2
-        run: sudo composer self-update --2
+      - name: Update composer
+        run: sudo composer self-update
 
       - name: Composer Github Auth
         run: composer config -g github-oauth.github.com ${{ github.token }}
@@ -72,6 +77,7 @@ jobs:
       - name: Setup some requirements
         working-directory: ./sylius
         run: |
+            composer config --no-plugins allow-plugins true
             composer config repositories.plugin '{"type": "path", "url": "../plugin/"}'
             composer config extra.symfony.allow-contrib true
             composer config secure-http false
@@ -80,7 +86,7 @@ jobs:
       - name: Require plugin without install
         working-directory: ./sylius
         run: |
-          composer require --no-install --no-update monsieurbiz/sylius-homepage-plugin="*@dev"
+          composer require --no-install --no-scripts monsieurbiz/sylius-homepage-plugin="*@dev"
 
       - name: Composer install
         working-directory: ./sylius

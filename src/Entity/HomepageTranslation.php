@@ -13,67 +13,23 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\AbstractTranslation;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="monsieurbiz_homepage_homepage_translation")
- */
 class HomepageTranslation extends AbstractTranslation implements HomepageTranslationInterface
 {
-    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $name;
+    protected ?string $name;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $content;
+    protected ?string $content;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $metaTitle;
+    protected ?string $metaTitle;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $metaKeywords;
+    protected ?string $metaKeywords;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $metaDescription;
+    protected ?string $metaDescription;
 
-    /**
-     * Redeclared for annotations.
-     *
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
-    protected $locale;
+    protected ?string $locale;
 
     public function getId(): ?int
     {

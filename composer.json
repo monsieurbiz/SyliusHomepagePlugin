@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "~7.4|~8.0",
-        "sylius/sylius": ">=1.8 <1.11",
+        "sylius/sylius": ">=1.8 <1.12",
         "gedmo/doctrine-extensions": "^2.4.12 || ^3.0",
         "monsieurbiz/sylius-rich-editor-plugin": "^2.0"
     },
@@ -56,7 +56,7 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
-        "phpcs": "php-cs-fixer fix --using-cache=false",
+        "phpcs": "php-cs-fixer fix --using-cache=no",
         "phpstan": "phpstan analyse -c phpstan.neon src/",
         "phpmd": "phpmd --exclude Migrations/* src/ ansi phpmd.xml",
         "phpunit": "phpunit",
@@ -68,6 +68,15 @@
         },
         "branch-alias": {
             "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "symfony/thanks": true,
+            "ergebnis/composer-normalize": true,
+            "symfony/flex": true,
+            "php-http/discovery": true
         }
     }
 }

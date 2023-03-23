@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.4', '8.0']
+        php: ['8.0']
 
     env:
       SYMFONY_ARGS: --no-tls
@@ -28,15 +28,19 @@ jobs:
           node-version: '14'
 
       - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          ini-values: date.timezone=UTC
+
+      - name: Set project php-version
         run: |
-          sudo update-alternatives --set php /usr/bin/php${{ matrix.php }}
-          echo "date.timezone=UTC" | sudo tee /etc/php/${{ matrix.php }}/cli/conf.d/timezone.ini
           echo "${{ matrix.php }}" > .php-version
 
       - name: Install symfony CLI
         run: |
-          curl https://get.symfony.com/cli/installer | bash
-          echo "${HOME}/.symfony/bin" >> $GITHUB_PATH
+          curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
+          sudo apt install symfony-cli
 
       - uses: actions/cache@v1
         id: cache-composer
@@ -46,10 +50,9 @@ jobs:
           restore-keys: composer2-php:${{ matrix.php }}-
 
       - run: mkdir -p /home/runner/{.composer/cache,.config/composer}
-        if: steps.cache-composer.outputs.cache-hit != 'true'
 
-      - name: Composer v2
-        run: sudo composer self-update --2
+      - name: Update composer
+        run: sudo composer self-update
 
       - name: Composer Github Auth
         run: composer config -g github-oauth.github.com ${{ github.token }}

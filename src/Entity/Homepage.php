@@ -16,18 +16,12 @@ namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Webmozart\Assert\Assert;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="monsieurbiz_homepage_homepage")
- */
 class Homepage implements HomepageInterface
 {
     use TimestampableTrait;
@@ -38,43 +32,23 @@ class Homepage implements HomepageInterface
         getTranslation as private doGetTranslation;
     }
 
-    /**
-     * @var int|null
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    protected ?int $id;
 
     /**
      * @var Collection<int, ChannelInterface>
-     * @ORM\ManyToMany(targetEntity="\Sylius\Component\Channel\Model\Channel")
-     * @ORM\JoinTable(
-     *     name="monsieurbiz_homepage_homepage_channels",
-     *     joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="channel_id", referencedColumnName="id", unique=true)}
-     * )
      */
-    private $channels;
+    protected Collection $channels;
 
     /**
      * @var DateTimeInterface|null
-     * @ORM\Column(name="created_at", type="datetime_immutable")
-     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
     /**
      * @var DateTimeInterface|null
-     * @ORM\Column(name="updated_at", type="datetime")
-     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
-    /**
-     * Homepage constructor.
-     */
     public function __construct()
     {
         $this->initializeTranslationsCollection();
@@ -164,9 +138,6 @@ class Homepage implements HomepageInterface
         $this->getTranslation()->setMetaKeywords($metaKeywords);
     }
 
-    /**
-     * @inheritdoc
-     */
     protected function createTranslation(): HomepageTranslation
     {
         return new HomepageTranslation();

@@ -29,8 +29,6 @@ class HomepageTranslation extends AbstractTranslation implements HomepageTransla
 
     protected ?string $metaDescription;
 
-    protected ?string $locale;
-
     public function getId(): ?int
     {
         return $this->id;

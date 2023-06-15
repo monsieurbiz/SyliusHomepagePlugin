@@ -28,6 +28,7 @@ class HomepageTranslationType extends AbstractResourceType
         $builder
             ->add('content', RichEditorType::class, [
                 'label' => 'monsieurbiz_homepage.ui.form.content',
+                'locale' => $builder->getName(),
             ])
             ->add('name', TextType::class, [
                 'label' => 'monsieurbiz_homepage.ui.form.name',

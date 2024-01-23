@@ -17,3 +17,7 @@ monsieurbiz_homepage:
             id: 'ID'
         actions:
             create: 'Nouvelle page d''accueil'
+sylius_plus:
+    rbac:
+        parent:
+            homepages: 'Homepages'

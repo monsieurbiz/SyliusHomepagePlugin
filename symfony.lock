@@ -414,6 +414,9 @@
     "monolog/monolog": {
         "version": "2.1.1"
     },
+    "monsieurbiz/sylius-plus-adapter-plugin": {
+        "version": "v1.0.0"
+    },
     "monsieurbiz/sylius-rich-editor-plugin": {
         "version": "1.0",
         "recipe": {
@@ -756,6 +759,9 @@
     },
     "sylius/admin-api-bundle": {
         "version": "v1.9.4"
+    },
+    "sylius/calendar": {
+        "version": "v0.3.0"
     },
     "sylius/fixtures-bundle": {
         "version": "v1.7.0"

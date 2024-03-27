@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\DependencyInjection;
 
+use MonsieurBiz\SyliusHomepagePlugin\Entity\Homepage;
+use MonsieurBiz\SyliusPlusAdapterPlugin\DependencyInjection\SyliusPlusCompatibilityTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -21,6 +23,8 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 final class MonsieurBizSyliusHomepageExtension extends Extension implements PrependExtensionInterface
 {
+    use SyliusPlusCompatibilityTrait;
+
     /**
      * @inheritdoc
      */
@@ -29,6 +33,7 @@ final class MonsieurBizSyliusHomepageExtension extends Extension implements Prep
         $this->processConfiguration($this->getConfiguration([], $container), $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
+        $this->enabledFilteredChannelChoiceType($container, ['homepage' => Homepage::class]);
     }
 
     /**
@@ -50,5 +55,12 @@ final class MonsieurBizSyliusHomepageExtension extends Extension implements Prep
                 'MonsieurBiz\SyliusHomepagePlugin\Migrations' => '@MonsieurBizSyliusHomepagePlugin/Migrations',
             ]),
         ]);
+        $this->prependRestrictedResources($container, ['homepage']);
+        $this->replaceInGridOriginalQueryBuilderWithChannelRestrictedQueryBuilder(
+            $container,
+            'monsieurbiz_homepage',
+            '%monsieurbiz_homepage.model.homepage.class%',
+            "expr:service('monsieurbiz_homepage.repository.homepage').createQueryBuilder('o')"
+        );
     }
 }

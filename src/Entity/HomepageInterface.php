@@ -13,14 +13,13 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Gedmo\Timestampable\Timestampable;
-use Sylius\Component\Channel\Model\ChannelInterface;
+use Sylius\Component\Channel\Model\ChannelsAwareInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
 use Sylius\Component\Resource\Model\TranslatableInterface;
 
-interface HomepageInterface extends ResourceInterface, TranslatableInterface, TimestampableInterface, Timestampable
+interface HomepageInterface extends ResourceInterface, TranslatableInterface, TimestampableInterface, Timestampable, ChannelsAwareInterface
 {
     public function getId(): ?int;
 
@@ -43,15 +42,4 @@ interface HomepageInterface extends ResourceInterface, TranslatableInterface, Ti
     public function getMetaKeywords(): ?string;
 
     public function setMetaKeywords(?string $metaKeywords): void;
-
-    /**
-     * @return Collection<int, ChannelInterface>
-     */
-    public function getChannels(): Collection;
-
-    public function addChannel(ChannelInterface $channel): void;
-
-    public function removeChannel(ChannelInterface $channel): void;
-
-    public function hasChannel(ChannelInterface $channel): bool;
 }

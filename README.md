@@ -1,9 +1,12 @@
 [![Banner of Sylius Homepages plugin](docs/images/banner.jpg)](https://monsieurbiz.com/agence-web-experte-sylius)
 
-<h1 align="center">Homepages</h1>
+<h1 align="center">Sylius Homepages</h1>
 
 [![Homepage Plugin license](https://img.shields.io/github/license/monsieurbiz/SyliusHomepagePlugin?public)](https://github.com/monsieurbiz/SyliusHomepagePlugin/blob/master/LICENSE.txt)
-[![Build Status](https://img.shields.io/github/workflow/status/monsieurbiz/SyliusHomepagePlugin/Tests)](https://github.com/monsieurbiz/SyliusHomepagePlugin/actions?query=workflow%3ATests)
+[![Tests Status](https://img.shields.io/github/actions/workflow/status/monsieurbiz/SyliusHomepagePlugin/tests.yaml?branch=master&logo=github)](https://github.com/monsieurbiz/SyliusHomepagePlugin/actions?query=workflow%3ATests)
+[![Recipe Status](https://img.shields.io/github/actions/workflow/status/monsieurbiz/SyliusHomepagePlugin/recipe.yaml?branch=master&label=recipes&logo=github)](https://github.com/monsieurbiz/SyliusHomepagePlugin/actions?query=workflow%3ASecurity)
+[![Security Status](https://img.shields.io/github/actions/workflow/status/monsieurbiz/SyliusHomepagePlugin/security.yaml?branch=master&label=security&logo=github)](https://github.com/monsieurbiz/SyliusHomepagePlugin/actions?query=workflow%3ASecurity)
+
 
 This plugins allows you to manage your homepages using the Rich Editor.
 
@@ -11,11 +14,27 @@ If you want to know more about our editor, see the [Rich Editor Repository](http
 
 ![Example of homepage edition](screenshots/demo.gif)
 
+## Compatibility
+
+| Sylius Version | PHP Version |
+|---|---|
+| 1.11 | 8.0 - 8.1 |
+| 1.12 | 8.1 - 8.2 |
+| 1.13 | 8.1 - 8.2 |
+
 ## Installation
+
+If you want to use our recipes, you can configure your composer.json by running:
+
+```bash
+composer config --no-plugins --json extra.symfony.endpoint '["https://api.github.com/repos/monsieurbiz/symfony-recipes/contents/index.json?ref=flex/master","flex://defaults"]'
+```
 
 ```bash
 composer require monsieurbiz/sylius-homepage-plugin
 ```
+
+If you do not use the recipes : 
 
 Change your `config/bundles.php` file to add the line for the plugin : 
 

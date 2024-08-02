@@ -43,6 +43,6 @@ class HomepageRepository extends EntityRepository
             ->setParameter('locale', $locale)
             ->getQuery()
             ->getOneOrNullResult()
-            ;
+        ;
     }
 }

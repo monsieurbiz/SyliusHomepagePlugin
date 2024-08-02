@@ -13,24 +13,10 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Menu;
 
-use Knp\Menu\Util\MenuManipulator;
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
 
 final class AdminMenuListener
 {
-    /**
-     * @var MenuManipulator
-     */
-    private $manipulator;
-
-    /**
-     * AdminMenuListener constructor.
-     */
-    public function __construct(MenuManipulator $manipulator)
-    {
-        $this->manipulator = $manipulator;
-    }
-
     public function addAdminMenuItem(MenuBuilderEvent $event): void
     {
         $menu = $event->getMenu();

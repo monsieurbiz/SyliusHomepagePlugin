@@ -25,7 +25,6 @@ use Webmozart\Assert\Assert;
 class Homepage implements HomepageInterface
 {
     use TimestampableTrait;
-
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
 

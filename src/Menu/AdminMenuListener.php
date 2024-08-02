@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Menu;
 
-use Knp\Menu\Util\MenuManipulator;
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
 
 final class AdminMenuListener

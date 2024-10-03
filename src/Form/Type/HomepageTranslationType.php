@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\Form\Type;
 
+use MonsieurBiz\SyliusMediaManagerPlugin\Form\Type\ImageType as MediaManagerImageType;
 use MonsieurBiz\SyliusRichEditorPlugin\Form\Type\RichEditorType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -44,6 +45,11 @@ class HomepageTranslationType extends AbstractResourceType
             ->add('metaKeywords', TextType::class, [
                 'required' => false,
                 'label' => 'monsieurbiz_homepage.ui.form.meta_keywords',
+            ])
+            ->add('metaImage', MediaManagerImageType::class, [
+                'label' => 'monsieurbiz_homepage.ui.form.meta_image',
+                'help' => 'monsieurbiz_homepage.ui.form.meta_image_help',
+                'required' => false,
             ])
         ;
     }

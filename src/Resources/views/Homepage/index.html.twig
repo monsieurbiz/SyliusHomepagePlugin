@@ -20,6 +20,9 @@
     {% if homepages is not empty and homepages.metaKeywords is not empty %}
         <meta name="keywords" content="{{ homepages.metaKeywords }}"/>
     {% endif %}
+    {% if homepages is not empty and homepages.metaImage is not empty %}
+        <meta property="og:image" content="{{ homepages.metaImage|imagine_filter('monsieurbiz_homepage_og_image') }}" />
+    {% endif %}
 {% endblock %}
 
 {% block content %}

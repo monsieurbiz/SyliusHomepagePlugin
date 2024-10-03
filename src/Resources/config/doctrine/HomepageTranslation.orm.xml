@@ -14,6 +14,7 @@
         <field name="content" type="text" nullable="true" />
         <field name="metaTitle" length="255" nullable="true" />
         <field name="metaKeywords" length="255" nullable="true" />
+        <field name="metaImage" nullable="true" />
         <field name="metaDescription" type="text" nullable="true" />
         <field name="locale" length="10" nullable="true" />
     </mapped-superclass>

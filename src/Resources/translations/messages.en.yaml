@@ -14,6 +14,8 @@ monsieurbiz_homepage:
             meta_title: 'Meta title'
             meta_description: 'Meta description'
             meta_keywords: 'Meta keywords'
+            meta_image: 'Meta image'
+            meta_image_help: 'Ideal format: 1200 x 630 px'
             id: 'ID'
         actions:
             create: 'New homepage'

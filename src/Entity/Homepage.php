@@ -137,6 +137,16 @@ class Homepage implements HomepageInterface
         $this->getTranslation()->setMetaKeywords($metaKeywords);
     }
 
+    public function getMetaImage(): ?string
+    {
+        return $this->getTranslation()->getMetaImage();
+    }
+
+    public function setMetaImage(?string $metaImage): void
+    {
+        $this->getTranslation()->setMetaImage($metaImage);
+    }
+
     protected function createTranslation(): HomepageTranslation
     {
         return new HomepageTranslation();

@@ -29,6 +29,8 @@ class HomepageTranslation extends AbstractTranslation implements HomepageTransla
 
     protected ?string $metaDescription;
 
+    protected ?string $metaImage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -82,5 +84,15 @@ class HomepageTranslation extends AbstractTranslation implements HomepageTransla
     public function setMetaKeywords(?string $metaKeywords): void
     {
         $this->metaKeywords = $metaKeywords;
+    }
+
+    public function getMetaImage(): ?string
+    {
+        return $this->metaImage;
+    }
+
+    public function setMetaImage(?string $metaImage): void
+    {
+        $this->metaImage = $metaImage;
     }
 }

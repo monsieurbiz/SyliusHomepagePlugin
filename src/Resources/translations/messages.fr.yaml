@@ -2,6 +2,7 @@ monsieurbiz_homepage:
     ui:
         cms_content: 'Contenus CMS'
         homepages: 'Pages d''accueil'
+        homepage: 'Page d''accueil'
         homepages_subheader: 'Gérez vos pages d''accueil'
         new_homepage: 'Nouvelle page d''accueil'
         edit_homepage: 'Édition d''une page d''accueil'
@@ -23,3 +24,6 @@ sylius_plus:
     rbac:
         parent:
             homepages: 'Homepages'
+monsieurbiz_menu:
+    provider:
+        homepage: 'Page d''accueil'

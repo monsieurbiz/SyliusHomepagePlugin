@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace App\Menu;
+namespace MonsieurBiz\SyliusHomepagePlugin\Menu;
 
 use MonsieurBiz\SyliusMenuPlugin\Provider\AbstractUrlProvider;
 use Symfony\Component\Routing\RouterInterface;

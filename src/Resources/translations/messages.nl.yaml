@@ -2,6 +2,7 @@ monsieurbiz_homepage:
     ui:
         cms_content: 'Inhoud van CMS'
         homepages: 'Homepagina''s'
+        homepage: 'Homepagina'
         homepages_subheader: 'Beheer je homepagina''s'
         new_homepage: 'Nieuwe homepagina'
         edit_homepage: 'Homepagina bewerken'
@@ -23,3 +24,6 @@ sylius_plus:
     rbac:
         parent:
             homepages: 'Homepagina''s'
+monsieurbiz_menu:
+    provider:
+        homepage: 'Homepagina'

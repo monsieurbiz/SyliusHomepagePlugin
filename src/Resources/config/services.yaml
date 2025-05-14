@@ -32,3 +32,14 @@ services:
             $dataClass: '%monsieurbiz_homepage.model.homepage_translation.class%'
             $validationGroups: ['monsieurbiz']
 
+    # Live components
+    sylius_admin.monsieurbiz_homepage.twig.component.homepage.form:
+        autoconfigure: false
+        class: Sylius\Bundle\UiBundle\Twig\Component\ResourceFormComponent
+        arguments:
+            - '@monsieurbiz_homepage.repository.homepage'
+            - '@form.factory'
+            - '%monsieurbiz_homepage.model.homepage.class%'
+            - 'MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageType'
+        tags:
+            - { name: 'sylius.live_component.admin', key: 'sylius_admin:monsieurbiz_homepage:homepage:form' }

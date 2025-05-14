@@ -25,12 +25,18 @@ final class AdminMenuListener
             $content = $menu
                 ->addChild('monsieurbiz-cms')
                 ->setLabel('monsieurbiz_homepage.ui.cms_content')
+                ->setLabelAttribute('icon', 'tabler:file')
+                ->setExtra('always_open', true)
             ;
         }
 
-        $content->addChild('monsieurbiz-homepage-homepage', ['route' => 'monsieurbiz_homepage_admin_homepage_index'])
+        $content
+            ->addChild('monsieurbiz-homepage-homepage', ['route' => 'monsieurbiz_homepage_admin_homepage_index', 'extras' => ['routes' => [
+                'monsieurbiz_homepage_admin_homepage_create',
+                'monsieurbiz_homepage_admin_homepage_update',
+            ]]])
             ->setLabel('monsieurbiz_homepage.ui.homepages')
-            ->setLabelAttribute('icon', 'home')
+            ->setLabelAttribute('icon', 'tabler:home')
         ;
     }
 }

@@ -1,0 +1,9 @@
+{% set homepages = hookable_metadata.context.homepages|default(null) %}
+
+{% if homepages is not empty %}
+    {{ homepages.content|monsieurbiz_richeditor_render_field }}
+{% else %}
+    {% hook 'sylius_shop.homepage.index' with {
+        _prefixes: []
+    } %}
+{% endif %}

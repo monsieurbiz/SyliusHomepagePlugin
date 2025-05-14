@@ -414,9 +414,6 @@
     "monolog/monolog": {
         "version": "2.1.1"
     },
-    "monsieurbiz/sylius-plus-adapter-plugin": {
-        "version": "v1.0.0"
-    },
     "monsieurbiz/sylius-rich-editor-plugin": {
         "version": "1.0",
         "recipe": {

@@ -2,11 +2,11 @@ sylius_twig_hooks:
     hooks:
         'monsieurbiz.homepage.index#metatags':
             homepage_metatags:
-                template: '@MonsieurBizSyliusHomepagePlugin/Homepage/metatags.html.twig'
+                template: '@MonsieurBizSyliusHomepagePlugin/shop/homepage/index/metatags.html.twig'
                 priority: 0
         'monsieurbiz.homepage.index':
             content:
-                template: '@MonsieurBizSyliusHomepagePlugin/Homepage/Index/content.html.twig'
+                template: '@MonsieurBizSyliusHomepagePlugin/shop/homepage/index/content.html.twig'
                 priority: 0
         
         # Create homepage

@@ -3,15 +3,8 @@ monsieurbiz_sylius_homepage_admin:
         alias: monsieurbiz_homepage.homepage
         section: admin
         permission: true
-        templates: "@SyliusAdmin\\Crud"
+        templates: "@SyliusAdmin\\shared\\crud"
         except: ['show']
         redirect: update
         grid: monsieurbiz_homepage
-        vars:
-            all:
-                subheader: monsieurbiz_homepage.ui.homepages_subheader
-                templates:
-                    form: "@MonsieurBizSyliusHomepagePlugin/Admin/Homepage/_form.html.twig"
-            index:
-                icon: 'home'
     type: sylius.resource

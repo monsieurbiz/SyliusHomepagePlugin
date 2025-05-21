@@ -31,7 +31,7 @@ class Homepage implements HomepageInterface
         getTranslation as private doGetTranslation;
     }
 
-    protected ?int $id;
+    protected ?int $id = null;
 
     /**
      * @var Collection<int, ChannelInterface>

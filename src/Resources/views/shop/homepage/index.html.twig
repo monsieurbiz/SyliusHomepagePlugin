@@ -1,0 +1,16 @@
+{% extends '@SyliusShop/shared/layout/base.html.twig' %}
+
+{% set homepage_hook = 'monsieurbiz.homepage.index' %}
+{% set prefixes = [homepage_hook] %}
+
+{% block title %}
+    {% if homepages is not empty and homepages.metaTitle is not empty %}
+        {{ homepages.metaTitle }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% hook homepage_hook %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% set homepages = hookable_metadata.context.homepages|default(null) %}
+{% if homepages is not empty and homepages.metaTitle is not empty %}
+    <meta property="og:title" content="{{ homepages.metaTitle }}"/>
+{% endif %}
+{% if homepages is not empty and homepages.metaDescription is not empty %}
+    <meta name="og:description" property="og:description" content="{{ homepages.metaDescription }}"/>
+    <meta name="description" property="og:description" content="{{ homepages.metaDescription }}"/>
+{% endif %}
+{% if homepages is not empty and homepages.metaKeywords is not empty %}
+    <meta name="keywords" content="{{ homepages.metaKeywords }}"/>
+{% endif %}
+{% if homepages is not empty and homepages.metaImage is not empty %}
+    <meta property="og:image" content="{{ homepages.metaImage|imagine_filter('monsieurbiz_homepage_og_image') }}" />
+{% endif %}

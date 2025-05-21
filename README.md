@@ -12,15 +12,13 @@ This plugins allows you to manage your homepages using the Rich Editor.
 
 If you want to know more about our editor, see the [Rich Editor Repository](https://github.com/monsieurbiz/SyliusRichEditorPlugin)
 
-![Example of homepage edition](screenshots/demo.gif)
-
 ## Compatibility
 
 | Sylius Version | PHP Version     |
 |----------------|-----------------|
-| 1.12           | 8.1 - 8.2 - 8.3 |
-| 1.13           | 8.1 - 8.2 - 8.3 |
-| 1.14           | 8.1 - 8.2 - 8.3 |
+| 2.0            | 8.2 - 8.3       |
+
+ℹ️ For Sylius 1.x, see our [1.x branch](https://github.com/monsieurbiz/SyliusHomepagePlugin/tree/1.x) and all 1.x releases.
 
 ## Installation
 
@@ -91,20 +89,24 @@ Then run it :
 bin/console doctrine:migrations:migrate
 ```
 
-## Example of complete homepage
+## Example of homepage
+
+### Admin grid
+
+![Admin homepage grid](docs/images/admin_grid.png)
 
 ### Admin form with preview
 
-![Admin full form](screenshots/full_back.jpg)
+![Admin full form](docs/images/admin_form.png)
 
 ### Front display
 
-![Front full display](screenshots/full_front.jpg)
+![Front full display](docs/images/front.png)
 
 ## Create custom elements
 
 You can customize and create custom elements in your page.  
-In order to do that, you can check the [Rich Editor custom element creation](https://github.com/monsieurbiz/SyliusRichEditorPlugin#create-your-own-elements)
+To do that, you can check the [Rich Editor custom element creation](https://github.com/monsieurbiz/SyliusRichEditorPlugin#create-your-own-elements)
 
 ## SEO Friendly
 

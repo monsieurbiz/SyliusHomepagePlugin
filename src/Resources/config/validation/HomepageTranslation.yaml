@@ -10,3 +10,11 @@ MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageTranslation:
         content:
             -   NotBlank:
                     groups: [monsieurbiz]
+        metaTitle:
+            -   Length:
+                    max: 255
+                    groups: [monsieurbiz]
+        metaKeywords:
+            -   Length:
+                    max: 255
+                    groups: [monsieurbiz]

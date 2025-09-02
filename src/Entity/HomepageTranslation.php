@@ -17,19 +17,19 @@ use Sylius\Component\Resource\Model\AbstractTranslation;
 
 class HomepageTranslation extends AbstractTranslation implements HomepageTranslationInterface
 {
-    protected int $id;
+    protected ?int $id = null;
 
-    protected ?string $name;
+    protected ?string $name = null;
 
-    protected ?string $content;
+    protected ?string $content = null;
 
-    protected ?string $metaTitle;
+    protected ?string $metaTitle = null;
 
-    protected ?string $metaKeywords;
+    protected ?string $metaKeywords = null;
 
-    protected ?string $metaDescription;
+    protected ?string $metaDescription = null;
 
-    protected ?string $metaImage;
+    protected ?string $metaImage = null;
 
     public function getId(): ?int
     {

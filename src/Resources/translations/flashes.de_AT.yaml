@@ -1,0 +1,4 @@
+sylius:
+    resource:
+        monsieurbiz_homepage:
+            unique_channel: 'Sie können nicht mehrere Startseiten für denselben Kanal haben.'

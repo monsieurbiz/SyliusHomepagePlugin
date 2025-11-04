@@ -23,7 +23,7 @@ class HomepageUrlProvider extends AbstractUrlProvider
 
     protected string $code = self::PROVIDER_CODE;
 
-    protected string $icon = 'home';
+    protected string $icon = 'tabler:globe';
 
     protected int $priority = 1000;
 

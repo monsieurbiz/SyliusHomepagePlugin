@@ -1,0 +1,29 @@
+monsieurbiz_homepage:
+    ui:
+        cms_content: 'CMS-Inhalte'
+        homepages: 'Startseiten'
+        homepage: 'Startseite'
+        homepages_subheader: 'Verwalten Sie Ihre Startseiten'
+        new_homepage: 'Neue Startseite'
+        edit_homepage: 'Startseite bearbeiten'
+        form:
+            homepage_info: 'Informationen zur Startseite'
+            homepage_content: 'Inhalt der Startseite'
+            name: 'Name'
+            content: 'Inhalt'
+            channels: 'Kanäle'
+            meta_title: 'Meta-Titel'
+            meta_description: 'Meta-Beschreibung'
+            meta_keywords: 'Meta-Schlüsselwörter'
+            meta_image: 'Meta-Bild'
+            meta_image_help: 'Empfohlenes Format: 1200 × 630 px'
+            id: 'ID'
+        actions:
+            create: 'Neue Startseite'
+sylius_plus:
+    rbac:
+        parent:
+            homepages: 'Startseiten'            
+monsieurbiz_menu:
+    provider:
+        homepage: 'Startseite'

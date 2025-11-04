@@ -23,7 +23,7 @@ monsieurbiz_homepage:
 sylius_plus:
     rbac:
         parent:
-            homepages: 'Startseiten'            
+            homepages: 'Startseiten'
 monsieurbiz_menu:
     provider:
         homepage: 'Startseite'

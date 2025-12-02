@@ -17,40 +17,46 @@ use MonsieurBiz\SyliusMenuPlugin\Provider\AbstractUrlProvider;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class HomepageUrlProvider extends AbstractUrlProvider
-{
-    public const PROVIDER_CODE = 'homepage';
-
-    protected string $code = self::PROVIDER_CODE;
-
-    protected string $icon = 'tabler:globe';
-
-    protected int $priority = 1000;
-
-    public function __construct(
-        RouterInterface $router,
-        private TranslatorInterface $translator
-    ) {
-        parent::__construct($router);
-    }
-
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    protected function getResults(string $locale, string $search = ''): iterable
+if (class_exists(AbstractUrlProvider::class)) {
+    class HomepageUrlProvider extends AbstractUrlProvider
     {
-        return [
-            (object) [
-                'title' => $this->translator->trans('monsieurbiz_homepage.ui.homepage', [], 'messages', $locale),
-            ],
-        ];
-    }
+        public const PROVIDER_CODE = 'homepage';
 
-    protected function addItemFromResult(object $result, string $locale): void
+        protected string $code = self::PROVIDER_CODE;
+
+        protected string $icon = 'tabler:globe';
+
+        protected int $priority = 1000;
+
+        public function __construct(
+            RouterInterface $router,
+            private TranslatorInterface $translator
+        ) {
+            parent::__construct($router);
+        }
+
+        /**
+         * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+         */
+        protected function getResults(string $locale, string $search = ''): iterable
+        {
+            return [
+                (object) [
+                    'title' => $this->translator->trans('monsieurbiz_homepage.ui.homepage', [], 'messages', $locale),
+                ],
+            ];
+        }
+
+        protected function addItemFromResult(object $result, string $locale): void
+        {
+            $this->addItem(
+                (string) $result->title,
+                $this->router->generate('monsieurbiz_sylius_homepage_homepage', ['_locale' => $locale])
+            );
+        }
+    }
+} else {
+    class HomepageUrlProvider
     {
-        $this->addItem(
-            (string) $result->title,
-            $this->router->generate('monsieurbiz_sylius_homepage_homepage', ['_locale' => $locale])
-        );
     }
 }

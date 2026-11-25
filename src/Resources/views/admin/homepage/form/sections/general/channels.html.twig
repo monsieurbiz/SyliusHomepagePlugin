@@ -1,1 +1,36 @@
-{{ form_row(hookable_metadata.context.form.channels) }}
+{% set form = hookable_metadata.context.form %}
+{% if not form.channels.vars.expanded|default(false) or not form.switchNow.vars.expanded|default(false) %}
+    {% if form.channels is defined %}{{ form_row(form.channels) }}{% endif %}
+    {% if form.switchNow is defined %}{{ form_row(form.switchNow) }}{% endif %}
+{% else %}
+    <fieldset class="mb-3">
+        {{ form_label(form.channels) }}
+        {{ form_errors(form.channels) }}
+        {{ form_errors(form.switchNow) }}
+        {% if form.switchNow|length %}
+            <p id="{{ form.switchNow.vars.id }}_help" class="form-hint mb-2">{{ 'monsieurbiz_homepage.ui.form.occupied_help'|trans }}</p>
+        {% endif %}
+        {% for choice in form.channels %}
+            {% set occupied = choice.vars.attr['data-homepage-channel-occupied']|default(false) %}
+            {% set channelName = choice.vars.label|default(choice.vars.value) %}
+            <div class="mb-2">
+                {{ form_widget(choice, {label: channelName, translation_domain: form.channels.vars.choice_translation_domain}) }}
+                {% if occupied %}
+                    <div class="ms-4">
+                        <span class="text-secondary">{{ 'monsieurbiz_homepage.ui.form.occupied'|trans }}</span>
+                        {% for optIn in form.switchNow|filter(option => option.vars.value is same as(choice.vars.value)) %}
+                            {{ form_widget(optIn, {
+                                label: 'monsieurbiz_homepage.ui.form.switch_now_channel'|trans({'%channel%': channelName}),
+                                translation_domain: false,
+                                attr: {'aria-describedby': form.switchNow.vars.id ~ '_help'}
+                            }) }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {{ form_help(form.channels) }}
+        {% do form.channels.setRendered() %}
+        {% do form.switchNow.setRendered() %}
+    </fieldset>
+{% endif %}

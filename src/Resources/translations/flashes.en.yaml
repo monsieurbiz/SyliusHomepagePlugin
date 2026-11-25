@@ -8,6 +8,6 @@ monsieurbiz_homepage:
         rescheduled: 'The switch has been rescheduled.'
         cancelled: 'The switch has been cancelled.'
         page_disabled_with_pending: 'Pending switches target this homepage. They will not run if the page is still disabled when processed.'
-        assigned_channel: 'To remove or replace a channel’s current homepage, schedule a switch to its replacement.'
+        assigned_channel: 'Check the selected channels: an assignment may have changed. When creating a homepage, select “Switch now” only for channels whose current homepage you want to replace. To replace it later, schedule a switch.'
         assigned_page: 'A homepage assigned to a channel cannot be disabled or deleted.'
         referenced_page: 'This homepage cannot be deleted because a switch references it.'

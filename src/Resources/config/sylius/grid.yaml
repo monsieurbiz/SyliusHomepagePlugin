@@ -30,6 +30,12 @@ sylius_grid:
                         template: "@SyliusAdmin/shared/grid/field/channels.html.twig"
                         vars:
                             th_class: "w-1 text-center"
+                pending_switches:
+                    type: twig
+                    path: .
+                    label: monsieurbiz_homepage.ui.switch.pending_count
+                    options:
+                        template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage/pending_switches.html.twig'
             actions:
                 main:
                     switches:

@@ -20,11 +20,20 @@ services:
         arguments:
             $homepageManager: '@monsieurbiz_homepage.manager.homepage'
             $homepageRepository: '@monsieurbiz_homepage.repository.homepage'
-            $requestConfigurationFactory: '@sylius.resource_controller.request_configuration_factory'
-            $authorizationChecker: '@sylius.resource_controller.authorization_checker'
+            $channelRepository: '@sylius.repository.channel'
             $timezone: '%monsieurbiz_homepage.switch_timezone%'
 
+    MonsieurBiz\SyliusHomepagePlugin\Service\HomepageAdminPermissions:
+        arguments:
+            $requestConfigurationFactory: '@sylius.resource_controller.request_configuration_factory'
+            $authorizationChecker: '@sylius.resource_controller.authorization_checker'
+
     MonsieurBiz\SyliusHomepagePlugin\EventListener\HomepageWriteGuard:
+        arguments:
+            $homepageManager: '@monsieurbiz_homepage.manager.homepage'
+            $homepageRepository: '@monsieurbiz_homepage.repository.homepage'
+
+    MonsieurBiz\SyliusHomepagePlugin\Twig\HomepageSwitchExtension:
         arguments:
             $homepageManager: '@monsieurbiz_homepage.manager.homepage'
 
@@ -45,6 +54,7 @@ services:
         arguments:
             $dataClass: '%monsieurbiz_homepage.model.homepage.class%'
             $validationGroups: ['monsieurbiz']
+            $homepageRepository: '@monsieurbiz_homepage.repository.homepage'
 
     MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageTranslationType:
         arguments:

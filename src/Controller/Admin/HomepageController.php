@@ -16,22 +16,40 @@ namespace MonsieurBiz\SyliusHomepagePlugin\Controller\Admin;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageWriteLock;
+use MonsieurBiz\SyliusHomepagePlugin\EventListener\HomepageWriteGuard;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 
 class HomepageController extends ResourceController
 {
     public function createAction(Request $request): Response
     {
+        $session = $request->isMethod('POST') && $request->hasSession() ? $request->getSession() : null;
+        $flashes = $session instanceof FlashBagAwareSessionInterface ? $session->getFlashBag() : null;
+        $previousSuccess = $flashes?->peek('success') ?? [];
         try {
-            return $this->write($request, fn (): Response => parent::createAction($request));
-        } catch (UniqueConstraintViolationException $exception) {
+            $response = $this->write($request, fn (): Response => parent::createAction($request));
+        } catch (\Throwable $exception) {
+            // Sylius flashes creation success before dispatching post_create, inside the transaction.
+            $flashes?->set('success', $previousSuccess);
+            $request->attributes->remove(HomepageWriteGuard::QUEUED_DURING_CREATE);
+            if (!$exception instanceof UniqueConstraintViolationException) {
+                throw $exception;
+            }
             $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
             $this->flashHelper->addErrorFlash($configuration, 'monsieurbiz_homepage.unique_channel');
 
             return $this->redirectHandler->redirectToReferer($configuration);
         }
+
+        if (true === $request->attributes->get(HomepageWriteGuard::QUEUED_DURING_CREATE)) {
+            $request->attributes->remove(HomepageWriteGuard::QUEUED_DURING_CREATE);
+            $flashes?->add('success', 'monsieurbiz_homepage.switch.queued');
+        }
+
+        return $response;
     }
 
     public function updateAction(Request $request): Response

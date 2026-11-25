@@ -20,21 +20,19 @@ use MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageSwitch;
 use MonsieurBiz\SyliusHomepagePlugin\Exception\HomepageSwitchRejected;
 use MonsieurBiz\SyliusHomepagePlugin\Form\Type\HomepageSwitchType;
 use MonsieurBiz\SyliusHomepagePlugin\Repository\HomepageRepository;
+use MonsieurBiz\SyliusHomepagePlugin\Service\HomepageAdminPermissions;
 use MonsieurBiz\SyliusHomepagePlugin\Service\HomepageSwitchScheduler;
-use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
-use Sylius\Resource\Metadata\RegistryInterface;
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Resource\ResourceActions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[IsGranted('ROLE_ADMINISTRATION_ACCESS')]
 final class HomepageSwitchController extends AbstractController
 {
     private const INDEX_ROUTE = 'monsieurbiz_homepage_admin_homepage_switch_index';
@@ -42,10 +40,9 @@ final class HomepageSwitchController extends AbstractController
     public function __construct(
         private EntityManagerInterface $homepageManager,
         private HomepageRepository $homepageRepository,
+        private ChannelRepositoryInterface $channelRepository,
         private HomepageSwitchScheduler $scheduler,
-        private RegistryInterface $registry,
-        private RequestConfigurationFactoryInterface $requestConfigurationFactory,
-        private AuthorizationCheckerInterface $authorizationChecker,
+        private HomepageAdminPermissions $permissions,
         private TranslatorInterface $translator,
         private string $timezone
     ) {
@@ -53,31 +50,72 @@ final class HomepageSwitchController extends AbstractController
 
     public function indexAction(Request $request): Response
     {
-        $this->checkPermission($request, ResourceActions::INDEX);
+        $this->permissions->requirePermission($request, ResourceActions::INDEX);
+
+        $historyFlag = $request->query->getString('history');
+        if (!in_array($historyFlag, ['', '0', '1'], true)) {
+            throw new BadRequestHttpException('Invalid homepage history filter.');
+        }
+        $history = '1' === $historyFlag;
+        $target = $history ? '' : $request->query->getString('target');
+        $status = $history ? '' : $request->query->getString('status');
+        $channelCode = $history ? $request->query->getString('channel') : '';
+        if (('' !== $target && (!preg_match('/^[1-9]\d{0,9}$/D', $target) || (int) $target > 2_147_483_647))
+            || !in_array($status, ['', HomepageSwitch::PENDING], true)
+            || strlen($channelCode) > 255
+        ) {
+            throw new BadRequestHttpException('Invalid homepage switch filters.');
+        }
+        $targetId = '' !== $target ? (int) $target : null;
+        $channel = '' !== $channelCode ? $this->channelRepository->findOneByCode($channelCode) : null;
+        if ('' !== $channelCode && null === $channel) {
+            throw new BadRequestHttpException('Unknown homepage history channel.');
+        }
+
+        $criteria = $history ? ['status' => HomepageSwitch::EXECUTED] : [];
+        if (null !== $targetId) {
+            $criteria['target'] = $targetId;
+        }
+        if ('' !== $status) {
+            $criteria['status'] = $status;
+        }
+        if (null !== $channel) {
+            $criteria['channel'] = $channel;
+        }
 
         return $this->render('@MonsieurBizSyliusHomepagePlugin/admin/homepage_switch/index.html.twig', [
-            'switches' => $this->homepageManager->getRepository(HomepageSwitch::class)->findBy([], ['scheduledAt' => 'DESC']),
+            'switches' => $this->homepageManager->getRepository(HomepageSwitch::class)->findBy(
+                $criteria,
+                [$history ? 'executedAt' : 'scheduledAt' => 'DESC', 'id' => 'DESC']
+            ),
             'timezone' => $this->timezone,
+            'channels' => $this->channelRepository->findBy([], ['name' => 'ASC']),
+            'filters' => [
+                'target' => $targetId,
+                'status' => '' !== $status ? $status : null,
+                'history' => $history,
+                'channel' => $channel?->getCode(),
+            ],
         ]);
     }
 
     public function createAction(Request $request, int $id): Response
     {
-        $this->checkPermission($request, ResourceActions::UPDATE);
+        $this->permissions->requirePermission($request, ResourceActions::UPDATE);
 
         return $this->form($request, $this->findHomepage($id), 'create');
     }
 
     public function activateNowAction(Request $request, int $id): Response
     {
-        $this->checkPermission($request, ResourceActions::UPDATE);
+        $this->permissions->requirePermission($request, ResourceActions::UPDATE);
 
         return $this->form($request, $this->findHomepage($id), 'activate_now');
     }
 
     public function updateAction(Request $request, int $id): Response
     {
-        $this->checkPermission($request, ResourceActions::UPDATE);
+        $this->permissions->requirePermission($request, ResourceActions::UPDATE);
         $switch = $this->findSwitch($id);
         if (!$switch->isPending()) {
             throw new ConflictHttpException($this->translator->trans('monsieurbiz_homepage.ui.switch.error.not_pending'));
@@ -88,7 +126,7 @@ final class HomepageSwitchController extends AbstractController
 
     public function cancelAction(Request $request, int $id): Response
     {
-        $this->checkPermission($request, ResourceActions::UPDATE);
+        $this->permissions->requirePermission($request, ResourceActions::UPDATE);
         if (!$this->isCsrfTokenValid('homepage_switch_cancel_' . $id, $request->request->getString('_token'))) {
             throw $this->createAccessDeniedException('Invalid CSRF token.');
         }
@@ -102,14 +140,6 @@ final class HomepageSwitchController extends AbstractController
         $this->addFlash('success', 'monsieurbiz_homepage.switch.cancelled');
 
         return $this->redirectToRoute(self::INDEX_ROUTE, status: Response::HTTP_SEE_OTHER);
-    }
-
-    private function checkPermission(Request $request, string $action): void
-    {
-        $configuration = $this->requestConfigurationFactory->create($this->registry->get('monsieurbiz_homepage.homepage'), $request);
-        if (!$this->authorizationChecker->isGranted($configuration, $configuration->getPermission($action))) {
-            throw $this->createAccessDeniedException();
-        }
     }
 
     private function form(Request $request, HomepageInterface $homepage, string $mode, ?HomepageSwitch $switch = null): Response

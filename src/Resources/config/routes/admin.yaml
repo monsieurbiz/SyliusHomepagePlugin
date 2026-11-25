@@ -8,3 +8,37 @@ monsieurbiz_sylius_homepage_admin:
         redirect: update
         grid: monsieurbiz_homepage
     type: sylius.resource
+
+monsieurbiz_homepage_admin_homepage_switch_index:
+    path: /homepage-switches/
+    controller: MonsieurBiz\SyliusHomepagePlugin\Controller\Admin\HomepageSwitchController::indexAction
+    methods: [GET]
+    defaults: { _sylius: { section: admin, permission: true } }
+
+monsieurbiz_homepage_admin_homepage_switch_create:
+    path: /homepage-switches/homepage/{id}/schedule
+    controller: MonsieurBiz\SyliusHomepagePlugin\Controller\Admin\HomepageSwitchController::createAction
+    methods: [GET, POST]
+    requirements: { id: '\d{1,10}' }
+    defaults: { _sylius: { section: admin, permission: true } }
+
+monsieurbiz_homepage_admin_homepage_switch_activate_now:
+    path: /homepage-switches/homepage/{id}/activate-now
+    controller: MonsieurBiz\SyliusHomepagePlugin\Controller\Admin\HomepageSwitchController::activateNowAction
+    methods: [GET, POST]
+    requirements: { id: '\d{1,10}' }
+    defaults: { _sylius: { section: admin, permission: true } }
+
+monsieurbiz_homepage_admin_homepage_switch_update:
+    path: /homepage-switches/{id}/update
+    controller: MonsieurBiz\SyliusHomepagePlugin\Controller\Admin\HomepageSwitchController::updateAction
+    methods: [GET, POST]
+    requirements: { id: '\d{1,10}' }
+    defaults: { _sylius: { section: admin, permission: true } }
+
+monsieurbiz_homepage_admin_homepage_switch_cancel:
+    path: /homepage-switches/{id}/cancel
+    controller: MonsieurBiz\SyliusHomepagePlugin\Controller\Admin\HomepageSwitchController::cancelAction
+    methods: [POST]
+    requirements: { id: '\d{1,10}' }
+    defaults: { _sylius: { section: admin, permission: true } }

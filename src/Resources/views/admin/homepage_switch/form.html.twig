@@ -1,0 +1,31 @@
+{% extends '@MonsieurBizSyliusHomepagePlugin/admin/homepage_switch/layout.html.twig' %}
+{% set heading = 'monsieurbiz_homepage.ui.switch.' ~ mode %}
+{% form_theme form '@SyliusAdmin/shared/form_theme.html.twig' %}
+
+{% block content %}
+    {{ form_start(form) }}
+    <div class="card">
+        <div class="card-body">
+            <dl class="mb-3">
+                <dt>{{ 'monsieurbiz_homepage.ui.switch.target'|trans }}</dt>
+                <dd>{% include '@MonsieurBizSyliusHomepagePlugin/admin/homepage/name.html.twig' with {data: homepage} only %}</dd>
+                {% if mode == 'update' %}
+                    <dt>{{ 'sylius.ui.channel'|trans }}</dt>
+                    <dd>{{ switch.channel.name|default(switch.channel.code|default('#' ~ switch.channel.id)) }}</dd>
+                {% endif %}
+            </dl>
+            {{ form_errors(form) }}
+            {% if form.channel is defined %}{{ form_row(form.channel) }}{% endif %}
+            {% if form.scheduledAt is defined %}
+                {{ form_row(form.scheduledAt, {help: 'monsieurbiz_homepage.ui.switch.timezone', help_translation_parameters: {'%timezone%': timezone}}) }}
+            {% else %}
+                <p>{{ 'monsieurbiz_homepage.ui.switch.confirmation'|trans }}</p>
+            {% endif %}
+        </div>
+        <div class="card-footer d-flex flex-wrap justify-content-end gap-2">
+            <a class="btn" href="{{ path('monsieurbiz_homepage_admin_homepage_switch_index') }}">{{ 'sylius.ui.cancel'|trans }}</a>
+            <button type="submit" class="btn btn-primary">{{ (mode == 'activate_now' ? 'monsieurbiz_homepage.ui.switch.confirm' : heading)|trans }}</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

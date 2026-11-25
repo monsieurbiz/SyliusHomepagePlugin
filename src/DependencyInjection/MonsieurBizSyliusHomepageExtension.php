@@ -26,7 +26,8 @@ final class MonsieurBizSyliusHomepageExtension extends Extension implements Prep
      */
     public function load(array $config, ContainerBuilder $container): void
     {
-        $this->processConfiguration($this->getConfiguration([], $container), $config);
+        $configuration = $this->processConfiguration($this->getConfiguration([], $container), $config);
+        $container->setParameter('monsieurbiz_homepage.switch_timezone', $configuration['timezone']);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
     }
@@ -44,6 +45,9 @@ final class MonsieurBizSyliusHomepageExtension extends Extension implements Prep
      */
     public function prepend(ContainerBuilder $container): void
     {
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('messenger.yaml');
+
         $doctrineConfig = $container->getExtensionConfig('doctrine_migrations');
         $container->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => array_merge(array_pop($doctrineConfig)['migrations_paths'] ?? [], [

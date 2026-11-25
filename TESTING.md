@@ -56,3 +56,35 @@ make help
     ```
 
 > Tip: You can run all tests with `make test.all`!
+
+### Homepage switch integration tests
+
+Use a disposable **MariaDB** database named with a `_qa` or `_test` suffix. The
+suite writes fixtures and Messenger messages and leaves them in the database.
+It is not part of `make test.phpunit` or `make test.all`.
+
+Use PHP 8.3 and the Sylius 2.1 test application from `make application`.
+Before running the suite locally or in CI:
+
+1. Provision a dedicated MariaDB database for this run. Set `DATABASE_URL` to
+   that database explicitly, not to a development or client database.
+2. Run `doctrine:migrations:migrate --no-interaction` against that database
+   from `tests/Application`. Build the test application's admin assets
+   (`make yarn.install`) for the BrowserKit scenario. The Homepage migration
+   creates its own transport table; no transport setup is needed for the suite.
+3. Export the application's test settings (including `APP_SECRET` and
+   `MONSIEURBIZ_SYLIUS_MEDIA_MANAGER_PUBLIC_FOLDER`,
+   `MONSIEURBIZ_SYLIUS_MEDIA_MANAGER_ROOT_FOLDER_FROM_PUBLIC` and
+   `MONSIEURBIZ_SYLIUS_MEDIA_MANAGER_MAX_FILE_SIZE`). The integration target
+   loads Composer autoloading directly; it does not load Dotenv files.
+4. Run:
+
+   ```bash
+   HOMEPAGE_SWITCH_QA=1 make test.integration
+   ```
+
+In CI, use a fresh database per job and stop the database service with the job.
+Do not run a background worker against the test queue while the suite runs.
+If Composer blocks the supported Sylius 2.1 series on security advisories,
+keep any exception confined to the ignored test application, keep audit
+reporting enabled, and do not expose the test application over HTTP.

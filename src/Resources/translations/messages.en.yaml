@@ -12,6 +12,8 @@ monsieurbiz_homepage:
             name: 'Name'
             content: 'Content'
             channels: 'Channels'
+            enabled: 'Page enabled'
+            enabled_pending: 'If this page is disabled when a switch is processed, it will not replace the current page.'
             meta_title: 'Meta title'
             meta_description: 'Meta description'
             meta_keywords: 'Meta keywords'
@@ -20,6 +22,41 @@ monsieurbiz_homepage:
             id: 'ID'
         actions:
             create: 'New homepage'
+        switch:
+            title: 'Homepage switches'
+            view: 'View switches'
+            create: 'Schedule activation'
+            activate_now: 'Activate now'
+            update: 'Reschedule'
+            confirm: 'Confirm and queue'
+            confirmation: 'The request will be queued immediately. The channel’s homepage will only change once the request is processed. Activations scheduled for later are kept.'
+            timezone: 'Time zone: %timezone%'
+            previous: 'Previous homepage'
+            target: 'Target homepage'
+            executed_at: 'Processed at'
+            empty: 'No switches yet. To create one, choose a page in the homepage list.'
+            form:
+                channel: 'Channel'
+                scheduled_at: 'Scheduled date and time'
+            status:
+                pending: 'Pending'
+                executed: 'Executed'
+                no_change: 'No change'
+                failed: 'Failed'
+                superseded: 'Superseded'
+                cancelled: 'Cancelled'
+            reason:
+                target_disabled: 'The target homepage was disabled.'
+                missing_locale: 'The target homepage was not available in all active languages for this channel.'
+                already_active: 'The target homepage was already active on this channel.'
+                newer_switch: 'A more recent switch took precedence on this channel.'
+            error:
+                disabled: 'This homepage is disabled. Enable it before requesting a switch.'
+                duplicate: 'A switch is already scheduled for this channel at that time. Choose another time.'
+                future: 'Choose a date and time in the future.'
+                invalid_local_time: 'This local time does not exist or is ambiguous in the specified time zone. Choose another time.'
+                not_pending: 'This switch is no longer pending and cannot be changed.'
+                missing: 'The requested resource could not be found.'
 sylius_plus:
     rbac:
         parent:

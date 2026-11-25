@@ -17,9 +17,12 @@ sylius_grid:
                     label: monsieurbiz_homepage.ui.form.id
                     sortable: ~
                 name:
-                    type: string
+                    type: twig
+                    path: .
                     label: monsieurbiz_homepage.ui.form.name
                     sortable: translation.name
+                    options:
+                        template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage/name.html.twig'
                 channels:
                     type: twig
                     label: sylius.ui.channels
@@ -29,6 +32,12 @@ sylius_grid:
                             th_class: "w-1 text-center"
             actions:
                 main:
+                    switches:
+                        type: default
+                        label: monsieurbiz_homepage.ui.switch.view
+                        options:
+                            link:
+                                route: monsieurbiz_homepage_admin_homepage_switch_index
                     create:
                         type: create
                         label: monsieurbiz_homepage.ui.actions.create
@@ -37,6 +46,21 @@ sylius_grid:
                         type: update
                     delete:
                         type: delete
+                subitem:
+                    activation:
+                        type: list
+                        label: monsieurbiz_homepage.ui.switch.title
+                        options:
+                            visible: resource.enabled
+                            links:
+                                create:
+                                    label: monsieurbiz_homepage.ui.switch.create
+                                    route: monsieurbiz_homepage_admin_homepage_switch_create
+                                    parameters: { id: resource.id }
+                                activate_now:
+                                    label: monsieurbiz_homepage.ui.switch.activate_now
+                                    route: monsieurbiz_homepage_admin_homepage_switch_activate_now
+                                    parameters: { id: resource.id }
             filters:
                 name:
                     type: string

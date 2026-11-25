@@ -1,0 +1,55 @@
+{% extends '@MonsieurBizSyliusHomepagePlugin/admin/homepage_switch/layout.html.twig' %}
+{% set heading = 'monsieurbiz_homepage.ui.switch.title' %}
+
+{% block content %}
+    <div class="card">
+        {% if switches is empty %}
+            <div class="card-body">{{ 'monsieurbiz_homepage.ui.switch.empty'|trans }}</div>
+        {% else %}
+            <div class="card-header">{{ 'monsieurbiz_homepage.ui.switch.timezone'|trans({'%timezone%': timezone}) }}</div>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'sylius.ui.channel'|trans }}</th>
+                            <th scope="col">{{ 'monsieurbiz_homepage.ui.switch.previous'|trans }}</th>
+                            <th scope="col">{{ 'monsieurbiz_homepage.ui.switch.target'|trans }}</th>
+                            <th scope="col">{{ 'monsieurbiz_homepage.ui.switch.form.scheduled_at'|trans }}</th>
+                            <th scope="col">{{ 'monsieurbiz_homepage.ui.switch.executed_at'|trans }}</th>
+                            <th scope="col">{{ 'sylius.ui.status'|trans }}</th>
+                            <th scope="col">{{ 'sylius.ui.actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for switch in switches %}
+                            <tr>
+                                <th scope="row">{{ switch.channel.name|default(switch.channel.code|default('#' ~ switch.channel.id)) }}</th>
+                                <td>{% if switch.previous %}{% include '@MonsieurBizSyliusHomepagePlugin/admin/homepage/name.html.twig' with {data: switch.previous} only %}{% else %}—{% endif %}</td>
+                                <td>{% include '@MonsieurBizSyliusHomepagePlugin/admin/homepage/name.html.twig' with {data: switch.target} only %}</td>
+                                <td>{{ switch.scheduledAt|date('Y-m-d H:i:s P', timezone) }}</td>
+                                <td>{{ switch.executedAt ? switch.executedAt|date('Y-m-d H:i:s P', timezone) : '—' }}</td>
+                                <td>
+                                    {{ ('monsieurbiz_homepage.ui.switch.status.' ~ switch.status)|trans }}
+                                    {% if switch.reason %}
+                                        <div class="text-secondary">{{ ('monsieurbiz_homepage.ui.switch.reason.' ~ switch.reason)|trans }}</div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if switch.pending %}
+                                        <div class="d-flex flex-wrap gap-1">
+                                            <a class="btn btn-sm" href="{{ path('monsieurbiz_homepage_admin_homepage_switch_update', {id: switch.id}) }}">{{ 'monsieurbiz_homepage.ui.switch.update'|trans }}</a>
+                                            <form method="post" action="{{ path('monsieurbiz_homepage_admin_homepage_switch_cancel', {id: switch.id}) }}">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('homepage_switch_cancel_' ~ switch.id) }}">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">{{ 'sylius.ui.cancel'|trans }}</button>
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

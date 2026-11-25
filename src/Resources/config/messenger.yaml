@@ -1,0 +1,16 @@
+framework:
+    messenger:
+        transports:
+            monsieurbiz_homepage_switch:
+                dsn: 'doctrine://default'
+                options:
+                    table_name: monsieurbiz_homepage_switch_messages
+                    queue_name: monsieurbiz_homepage_switch
+                    auto_setup: false
+                failure_transport: monsieurbiz_homepage_switch_failed
+            monsieurbiz_homepage_switch_failed:
+                dsn: 'doctrine://default'
+                options:
+                    table_name: monsieurbiz_homepage_switch_messages
+                    queue_name: monsieurbiz_homepage_switch_failed
+                    auto_setup: false

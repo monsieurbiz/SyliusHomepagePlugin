@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageWriteLock" table="monsieurbiz_homepage_write_lock">
+        <id name="id" type="integer"/>
+    </entity>
+</doctrine-mapping>

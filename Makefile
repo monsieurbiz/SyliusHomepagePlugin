@@ -125,6 +125,11 @@ test.phpmd: ## Run PHPMD
 test.phpunit: ## Run PHPUnit
 	${COMPOSER} phpunit
 
+.PHONY: test.integration
+test.integration: ## Run Homepage integration tests against an explicitly selected disposable DB
+	@test "$$HOMEPAGE_SWITCH_QA" = 1 && test -n "$$DATABASE_URL" || { echo 'Set HOMEPAGE_SWITCH_QA=1 and DATABASE_URL to a dedicated, migrated *_qa or *_test database.' >&2; exit 1; }
+	APP_ENV=test APP_DEBUG=0 php ${APP_DIR}/vendor/bin/phpunit --no-configuration --do-not-cache-result --bootstrap ${APP_DIR}/vendor/autoload.php tests/Integration
+
 test.phpspec: ## Run PHPSpec
 	${COMPOSER} phpspec
 

@@ -30,6 +30,9 @@ sylius_twig_hooks:
         'sylius_admin.homepage.create.content.form.sections.general':
             default:
                 enabled: false
+            enabled_field:
+                template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage/form/sections/general/enabled.html.twig'
+                priority: 100
             channels:
                 template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage/form/sections/general/channels.html.twig'
                 priority: 200
@@ -66,6 +69,9 @@ sylius_twig_hooks:
         'sylius_admin.homepage.update.content.form.sections.general':
             default:
                 enabled: false
+            enabled_field:
+                template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage/form/sections/general/enabled.html.twig'
+                priority: 100
             channels:
                 template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage/form/sections/general/channels.html.twig'
                 priority: 200

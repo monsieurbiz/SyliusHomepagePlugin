@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageSwitch" table="monsieurbiz_homepage_switch">
+        <indexes>
+            <index name="homepage_switch_due" columns="channel_id,status,scheduled_at"/>
+            <index name="homepage_switch_target_status" columns="target_id,status"/>
+            <index name="homepage_switch_previous" columns="previous_id"/>
+        </indexes>
+        <unique-constraints>
+            <unique-constraint name="homepage_switch_channel_instant" columns="channel_id,scheduled_at"/>
+        </unique-constraints>
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="scheduledAt" column="scheduled_at" type="bigint"/>
+        <field name="schedulingKey" column="scheduling_key" length="32"/>
+        <field name="status" length="16"/>
+        <field name="reason" length="32" nullable="true"/>
+        <field name="executedAt" column="executed_at" type="bigint" nullable="true"/>
+
+        <many-to-one field="channel" target-entity="Sylius\Component\Channel\Model\ChannelInterface">
+            <join-column name="channel_id" nullable="false"/>
+        </many-to-one>
+        <many-to-one field="target" target-entity="MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageInterface">
+            <join-column name="target_id" nullable="false"/>
+        </many-to-one>
+        <many-to-one field="previous" target-entity="MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageInterface">
+            <join-column name="previous_id" nullable="true"/>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

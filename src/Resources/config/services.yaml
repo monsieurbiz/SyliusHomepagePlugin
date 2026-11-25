@@ -10,11 +10,30 @@ services:
 
     MonsieurBiz\SyliusHomepagePlugin\:
         resource: '../../*'
-        exclude: '../../{Entity,Migrations}'
-        
+        exclude: '../../{Entity,Event,Exception,Message,Migrations}'
+
     MonsieurBiz\SyliusHomepagePlugin\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
+
+    MonsieurBiz\SyliusHomepagePlugin\Controller\Admin\HomepageSwitchController:
+        arguments:
+            $homepageManager: '@monsieurbiz_homepage.manager.homepage'
+            $homepageRepository: '@monsieurbiz_homepage.repository.homepage'
+            $requestConfigurationFactory: '@sylius.resource_controller.request_configuration_factory'
+            $authorizationChecker: '@sylius.resource_controller.authorization_checker'
+            $timezone: '%monsieurbiz_homepage.switch_timezone%'
+
+    MonsieurBiz\SyliusHomepagePlugin\EventListener\HomepageWriteGuard:
+        arguments:
+            $homepageManager: '@monsieurbiz_homepage.manager.homepage'
+
+    MonsieurBiz\SyliusHomepagePlugin\Service\HomepageSwitchScheduler:
+        arguments:
+            $manager: '@monsieurbiz_homepage.manager.homepage'
+            $transportConnection: '@doctrine.dbal.default_connection'
+            $sender: '@messenger.transport.monsieurbiz_homepage_switch'
+            $homepageClass: '%monsieurbiz_homepage.model.homepage.class%'
 
     # Menu item in admin panel
     MonsieurBiz\SyliusHomepagePlugin\Menu\AdminMenuListener:

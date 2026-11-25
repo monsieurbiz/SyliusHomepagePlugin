@@ -1,0 +1,9 @@
+{% if data.pending %}
+    <div class="d-flex flex-wrap gap-1">
+        <a class="btn btn-sm" href="{{ path('monsieurbiz_homepage_admin_homepage_switch_update', {id: data.id}) }}">{{ 'monsieurbiz_homepage.ui.switch.update'|trans }}</a>
+        <form method="post" action="{{ path('monsieurbiz_homepage_admin_homepage_switch_cancel', {id: data.id}) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('homepage_switch_cancel_' ~ data.id) }}">
+            <button type="submit" class="btn btn-sm btn-outline-danger">{{ 'sylius.ui.cancel'|trans }}</button>
+        </form>
+    </div>
+{% endif %}

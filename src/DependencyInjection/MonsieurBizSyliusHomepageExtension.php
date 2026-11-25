@@ -26,8 +26,6 @@ final class MonsieurBizSyliusHomepageExtension extends Extension implements Prep
      */
     public function load(array $config, ContainerBuilder $container): void
     {
-        $configuration = $this->processConfiguration($this->getConfiguration([], $container), $config);
-        $container->setParameter('monsieurbiz_homepage.switch_timezone', $configuration['timezone']);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
     }
@@ -45,6 +43,10 @@ final class MonsieurBizSyliusHomepageExtension extends Extension implements Prep
      */
     public function prepend(ContainerBuilder $container): void
     {
+        // The Grid extension resolves field options before this extension's load().
+        $configuration = $this->processConfiguration(new Configuration(), $container->getExtensionConfig($this->getAlias()));
+        $container->setParameter('monsieurbiz_homepage.switch_timezone', $configuration['timezone']);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('messenger.yaml');
 

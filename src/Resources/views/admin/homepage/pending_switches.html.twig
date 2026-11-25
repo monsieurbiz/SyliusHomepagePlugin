@@ -1,4 +1,4 @@
-<a href="{{ path('monsieurbiz_homepage_admin_homepage_switch_index', {target: data.id, status: 'pending'}) }}">
+<a href="{{ path('monsieurbiz_homepage_admin_homepage_switch_index', {criteria: {target: data.id, status: 'pending'}}) }}">
     {{- monsieurbiz_homepage_pending_switch_count(data.id) -}}
     <span class="visually-hidden"> {{ 'monsieurbiz_homepage.ui.switch.pending_for_page'|trans({'%id%': data.id}) }}</span>
 </a>

@@ -11,9 +11,31 @@ monsieurbiz_sylius_homepage_admin:
 
 monsieurbiz_homepage_admin_homepage_switch_index:
     path: /homepage-switches/
-    controller: MonsieurBiz\SyliusHomepagePlugin\Controller\Admin\HomepageSwitchController::indexAction
+    controller: monsieurbiz_homepage.controller.homepage_switch::indexAction
     methods: [GET]
-    defaults: { _sylius: { section: admin, permission: true } }
+    defaults:
+        _format: html
+        _monsieurbiz_homepage_switch_grid: true
+        _sylius:
+            section: admin
+            permission: monsieurbiz_homepage.homepage.index
+            grid: monsieurbiz_homepage_switch
+            template: '@SyliusAdmin/shared/crud/index.html.twig'
+            vars: { hook_prefix: monsieurbiz_homepage.admin.switch_list }
+
+monsieurbiz_homepage_admin_homepage_switch_history:
+    path: /homepage-switches/history
+    controller: monsieurbiz_homepage.controller.homepage_switch::indexAction
+    methods: [GET]
+    defaults:
+        _format: html
+        _monsieurbiz_homepage_switch_grid: true
+        _sylius:
+            section: admin
+            permission: monsieurbiz_homepage.homepage.index
+            grid: monsieurbiz_homepage_switch_history
+            template: '@SyliusAdmin/shared/crud/index.html.twig'
+            vars: { hook_prefix: monsieurbiz_homepage.admin.switch_history }
 
 monsieurbiz_homepage_admin_homepage_switch_create:
     path: /homepage-switches/homepage/{id}/schedule

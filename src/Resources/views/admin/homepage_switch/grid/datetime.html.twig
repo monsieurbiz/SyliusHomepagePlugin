@@ -1,0 +1,5 @@
+{% if data %}
+    <time datetime="{{ data|date('c', options.vars.timezone) }}">{{ data|date('Y-m-d H:i:s P', options.vars.timezone) }} ({{ options.vars.timezone }})</time>
+{% else %}
+    —
+{% endif %}

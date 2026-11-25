@@ -16,8 +16,9 @@ namespace MonsieurBiz\SyliusHomepagePlugin\Entity;
 use DateTimeImmutable;
 use DateTimeZone;
 use Sylius\Component\Channel\Model\ChannelInterface;
+use Sylius\Resource\Model\ResourceInterface;
 
-class HomepageSwitch
+class HomepageSwitch implements ResourceInterface
 {
     public const PENDING = 'pending';
 

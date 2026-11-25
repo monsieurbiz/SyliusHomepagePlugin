@@ -2,6 +2,7 @@ monsieurbiz_homepage:
     ui:
         cms_content: 'Contenus CMS'
         homepages: 'Pages d''accueil'
+        homepage_switches: 'Bascules de page d’accueil'
         homepage: 'Page d''accueil'
         homepages_subheader: 'Gérez vos pages d''accueil'
         new_homepage: 'Nouvelle page d''accueil'
@@ -30,12 +31,9 @@ monsieurbiz_homepage:
             title: 'Bascules de page d’accueil'
             history: 'Historique'
             history_help: 'Seuls les changements de page effectivement exécutés sont affichés, du plus récent au plus ancien.'
-            history_empty: 'Aucun changement de page exécuté pour cette sélection.'
-            all_channels: 'Tous les canaux'
             all_switches: 'Toutes les bascules'
             pending_count: 'Bascules en attente'
             pending_for_page: 'Bascules en attente pour la page n° %id%'
-            pending_empty: 'Aucune bascule en attente pour cette sélection.'
             view: 'Voir les bascules'
             create: 'Planifier l’activation'
             activate_now: 'Activer maintenant'
@@ -46,7 +44,6 @@ monsieurbiz_homepage:
             previous: 'Page précédente'
             target: 'Page cible'
             executed_at: 'Date de traitement'
-            empty: 'Aucune bascule. Pour en créer une, choisissez une page dans la liste des pages d’accueil.'
             form:
                 channel: 'Canal'
                 scheduled_at: 'Date et heure prévues'

@@ -42,12 +42,14 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Clock\MockClock;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\ReceivedStamp;
 use Symfony\Component\Messenger\Transport\Receiver\ListableReceiverInterface;
 use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
+use Symfony\Component\Security\Http\AccessMap;
 
 final class HomepageSwitchTest extends KernelTestCase
 {
@@ -502,37 +504,187 @@ final class HomepageSwitchTest extends KernelTestCase
         $noChange->close('no_change', 'already_active');
         $cancelled = new HomepageSwitch($channel, $pendingTarget, $now->modify('+3 hours'));
         $cancelled->close('cancelled');
-        foreach ([
-            $old, $new, $elsewhere, $noChange, $cancelled,
-            new HomepageSwitch($channel, $pendingTarget, $now->modify('-30 minutes')),
-            new HomepageSwitch($other, $pendingTarget, $now->modify('+30 minutes')),
-            new HomepageSwitch($channel, $otherPendingTarget, $now->modify('+1 hour')),
-        ] as $switch) {
+        $overdue = new HomepageSwitch($channel, $pendingTarget, $now->modify('-30 minutes'));
+        $pending = [$overdue];
+        for ($i = 1; $i <= 25; ++$i) {
+            $future = new HomepageSwitch($other, $pendingTarget, $now->modify('+' . $i . ' minutes'));
+            $pending[] = $future;
+        }
+        foreach (array_merge([$old, $new, $elsewhere, $noChange, $cancelled, new HomepageSwitch($channel, $otherPendingTarget, $now->modify('+1 hour'))], $pending) as $switch) {
             $this->manager->persist($switch);
         }
         $client = $this->adminBrowser();
-        $url = '/admin/homepage-switches/';
-        $pendingFilter = ['target' => (string) $pendingTarget->getId(), 'status' => 'pending'];
-        $targetNames = static fn (Crawler $page): array => $page->filter('main tbody tr > td:nth-of-type(2)')->each(static fn (Crawler $cell): string => $cell->text());
-
-        $list = $client->request('GET', $url, $pendingFilter);
-        self::assertSame(200, $client->getResponse()->getStatusCode());
-        self::assertSame(['Requested page', 'Requested page'], $targetNames($list), 'Both future and overdue requests must be listed while pending.');
-
+        $router = self::getContainer()->get('router');
+        $targetNames = static fn (Crawler $page): array => $page->filter('tbody tr')->each(static fn (Crawler $row): string => $row->text());
         $grid = $client->request('GET', '/admin/homepages/');
         self::assertSame(200, $client->getResponse()->getStatusCode());
-        foreach ([[$pendingTarget, '2'], [$excludedTarget, '0']] as [$target, $count]) {
-            $counter = $grid->filter('tbody a[href="/admin/homepage-switches/?target=' . $target->getId() . '&status=pending"]');
-            self::assertCount(1, $counter);
+        $pendingCounter = $this->pendingCounter($grid, $pendingTarget);
+        $zeroCounter = $this->pendingCounter($grid, $excludedTarget);
+        foreach ([[$pendingCounter, '26'], [$zeroCounter, '0']] as [$counter, $count]) {
             self::assertSame($count, trim($counter->getNode(0)->firstChild->textContent));
         }
 
-        $history = $client->request('GET', $url, $pendingFilter + ['history' => '1', 'channel' => $channel->getCode()]);
+        $list = $client->click($pendingCounter->link());
         self::assertSame(200, $client->getResponse()->getStatusCode());
-        self::assertSame(['Second executed page', 'First executed page'], $targetNames($history));
+        $selectedTarget = $list->filter('select[name="criteria[target]"] option[selected]');
+        self::assertSame((string) $pendingTarget->getId(), $selectedTarget->attr('value'));
+        self::assertSame((string) $pendingTarget->getId(), $selectedTarget->text());
+        self::assertSame('pending', $list->filter('select[name="criteria[status]"] option[selected]')->attr('value'));
+        $next = $list->filter('a[href*="page=2"]')->first();
+        self::assertGreaterThan(0, $next->count(), 'The filtered grid has a real next page.');
+        parse_str((string) parse_url($next->attr('href'), \PHP_URL_QUERY), $nextQuery);
+        self::assertEquals(['target' => (string) $pendingTarget->getId(), 'status' => 'pending'], $nextQuery['criteria'] ?? null);
+        self::assertCount(25, $targetNames($list));
+        foreach ($targetNames($list) as $row) {
+            self::assertStringContainsString('Requested page', $row);
+        }
+        $updateUrl = static fn (HomepageSwitch $switch): string => $router->generate('monsieurbiz_homepage_admin_homepage_switch_update', ['id' => $switch->getId()]);
+        $overdueEdit = $updateUrl($overdue);
+        self::assertCount(0, $list->filter('tbody a[href="' . $overdueEdit . '"]'));
+        $secondPage = $client->click($next->link());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
+        self::assertCount(1, $targetNames($secondPage));
+        self::assertCount(1, $secondPage->filter('tbody a[href="' . $overdueEdit . '"]'), 'Overdue pending switch is included on the next page.');
+        foreach ($targetNames($secondPage) as $row) {
+            self::assertStringContainsString('Requested page', $row);
+        }
+        $updates = static fn (Crawler $page): array => $page->filter('tbody a[href$="/update"]')->each(static fn (Crawler $link): string => $link->attr('href'));
+        self::assertEqualsCanonicalizing(array_map($updateUrl, $pending), array_merge($updates($list), $updates($secondPage)));
 
-        $client->request('GET', $url, ['target' => 'bad']);
-        self::assertSame(400, $client->getResponse()->getStatusCode());
+        $oneChannel = $client->request('GET', '/admin/homepage-switches/', [
+            'criteria' => $nextQuery['criteria'] + ['channel' => (string) $channel->getId()],
+        ]);
+        self::assertSame(200, $client->getResponse()->getStatusCode());
+        $selectedChannel = $oneChannel->filter('select[name="criteria[channel]"] option[selected]');
+        self::assertSame((string) $channel->getId(), $selectedChannel->attr('value'));
+        self::assertSame($channel->getName(), $selectedChannel->text());
+        self::assertCount(1, $targetNames($oneChannel));
+        self::assertCount(1, $oneChannel->filter('tbody a[href="' . $overdueEdit . '"]'));
+
+        $empty = $client->click($zeroCounter->link());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
+        self::assertCount(0, $targetNames($empty));
+
+        $historyUrl = $router->generate('monsieurbiz_homepage_admin_homepage_switch_history');
+        self::assertSame('/admin/homepage-switches/history', $historyUrl);
+        $history = $client->request('GET', $historyUrl, [
+            'criteria' => ['channel' => (string) $channel->getId(), 'status' => 'pending'],
+            'sorting' => ['executedAt' => 'asc'],
+        ]);
+        self::assertSame(200, $client->getResponse()->getStatusCode());
+        self::assertSame((string) $channel->getId(), $history->filter('select[name="criteria[channel]"] option[selected]')->attr('value'));
+        self::assertCount(0, $history->filter('select[name="criteria[status]"]'));
+        $historyRows = $targetNames($history);
+        self::assertCount(2, $historyRows);
+        self::assertStringContainsString('Second executed page', $historyRows[0]);
+        self::assertStringContainsString('First executed page', $historyRows[1]);
+        self::assertCount(0, $history->filter('tbody a[href$="/update"], tbody form[action$="/cancel"]'));
+        $timezone = self::getContainer()->getParameter('monsieurbiz_homepage.switch_timezone');
+        $executed = $history->filter('tbody tr:first-child time')->last();
+        self::assertSame($new->getExecutedAt()->setTimezone(new DateTimeZone($timezone))->format('c'), $executed->attr('datetime'));
+        self::assertStringContainsString($timezone, $executed->text());
+
+        $list = $client->click($pendingCounter->link());
+        $cancel = $router->generate('monsieurbiz_homepage_admin_homepage_switch_cancel', ['id' => $future->getId()]);
+        $cancelForm = $list->filter('form[action="' . $cancel . '"]');
+        self::assertCount(1, $cancelForm);
+        $token = $cancelForm->filter('input[name="_token"]')->attr('value');
+        $client->request('POST', $cancel, ['_token' => 'invalid-qa']);
+        self::assertSame(403, $client->getResponse()->getStatusCode());
+        self::assertSame('pending', $this->state($future)['status']);
+        $client->request('POST', $cancel, ['_token' => $token]);
+        self::assertSame(303, $client->getResponse()->getStatusCode());
+        self::assertSame('/admin/homepage-switches/', $client->getResponse()->headers->get('Location'));
+        self::assertSame('cancelled', $this->state($future)['status']);
+    }
+
+    public function testSwitchGridsKeepTheHomepageIndexPermissionAndDoNotExposeGenericCrud(): void
+    {
+        [$channel] = $this->channels();
+        $target = $this->page('Private switch data');
+        $switch = new HomepageSwitch($channel, $target, $this->clock->now()->modify('-1 day'));
+        $switch->recordExecution(null, $this->clock->now());
+        $this->manager->persist($switch);
+        $client = $this->adminBrowser();
+        $client->disableReboot();
+        $denied = false;
+        $checker = $this->createMock(AuthorizationCheckerInterface::class);
+        $checker->method('isGranted')->willReturnCallback(static function ($configuration, string $permission) use (&$denied): bool {
+            return !$denied || 'monsieurbiz_homepage.homepage.index' !== $permission;
+        });
+        self::getContainer()->set('sylius.resource_controller.authorization_checker', $checker);
+        $paths = ['/admin/homepage-switches/', '/admin/homepage-switches/history'];
+        foreach ($paths as $i => $path) {
+            $criteria = ['criteria' => 0 === $i ? ['target' => (string) $target->getId()] : ['channel' => (string) $channel->getId()]];
+            $page = $client->request('GET', $path, $criteria, [], ['HTTP_ACCEPT' => 'text/html']);
+            self::assertSame(200, $client->getResponse()->getStatusCode());
+            self::assertStringContainsString('Private switch data', $page->filter('tbody')->text());
+
+            foreach ([false, true] as $xhr) {
+                $headers = ['HTTP_ACCEPT' => 'application/json'] + ($xhr ? ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'] : []);
+                $client->request('GET', $path, $criteria + ($xhr ? ['_format' => 'json'] : []), [], $headers);
+                $response = $client->getResponse();
+                self::assertSame(200, $response->getStatusCode());
+                self::assertStringContainsString('text/html', $response->headers->get('Content-Type', ''));
+                self::assertStringNotContainsString($switch->getSchedulingKey(), (string) $response->getContent());
+                self::assertStringNotContainsString('schedulingKey', (string) $response->getContent());
+            }
+        }
+
+        $denied = true;
+        foreach ($paths as $path) {
+            $client->request('GET', $path);
+            self::assertSame(403, $client->getResponse()->getStatusCode());
+        }
+        $routes = self::getContainer()->get('router')->getRouteCollection();
+        $methodsByPath = [];
+        foreach ($routes as $route) {
+            if (str_starts_with($route->getPath(), '/admin/homepage-switches/')) {
+                $methodsByPath[$route->getPath()][] = $route->getMethods();
+            }
+        }
+        self::assertEquals([
+            '/admin/homepage-switches/' => [['GET']],
+            '/admin/homepage-switches/history' => [['GET']],
+            '/admin/homepage-switches/homepage/{id}/schedule' => [['GET', 'POST']],
+            '/admin/homepage-switches/homepage/{id}/activate-now' => [['GET', 'POST']],
+            '/admin/homepage-switches/{id}/update' => [['GET', 'POST']],
+            '/admin/homepage-switches/{id}/cancel' => [['POST']],
+        ], $methodsByPath);
+
+        $guest = new KernelBrowser(self::$kernel);
+        foreach ($paths as $path) {
+            $guest->request('GET', $path);
+            self::assertSame(302, $guest->getResponse()->getStatusCode());
+            self::assertSame('/admin/login', parse_url($guest->getResponse()->headers->get('Location'), \PHP_URL_PATH));
+        }
+    }
+
+    public function testSwitchGridsRejectScalarCriteria(): void
+    {
+        $client = $this->adminBrowser();
+        foreach (['/admin/homepage-switches/', '/admin/homepage-switches/history'] as $path) {
+            $client->request('GET', $path, ['criteria' => 'pending']);
+            self::assertSame(400, $client->getResponse()->getStatusCode());
+        }
+    }
+
+    public function testSwitchGridsRequireTheAdminRoleWithoutTheStandardAccessRule(): void
+    {
+        // Remove the host application's role requirement for these URLs to exercise the plugin's own guard.
+        $accessMap = new AccessMap();
+        $accessMap->add(new PathRequestMatcher('^/admin/homepage-switches/(?:history)?$'), ['PUBLIC_ACCESS']);
+        self::getContainer()->set('security.access_map', $accessMap);
+        $client = $this->adminBrowser(hasAdminRole: false);
+        $client->disableReboot();
+
+        $checker = $this->createMock(AuthorizationCheckerInterface::class);
+        $checker->expects(self::never())->method('isGranted');
+        self::getContainer()->set('sylius.resource_controller.authorization_checker', $checker);
+        foreach (['/admin/homepage-switches/', '/admin/homepage-switches/history'] as $path) {
+            $client->request('GET', $path);
+            self::assertSame(403, $client->getResponse()->getStatusCode());
+        }
     }
 
     public function testMixedCreationRollsBackThePageAssignmentAndMessageWhenTransportFails(): void
@@ -811,7 +963,22 @@ final class HomepageSwitchTest extends KernelTestCase
         }
     }
 
-    private function adminBrowser(): KernelBrowser
+    private function pendingCounter(Crawler $page, Homepage $target): Crawler
+    {
+        $counter = $page->filter('tbody a')->reduce(static function (Crawler $link) use ($target): bool {
+            $url = parse_url($link->attr('href') ?? '');
+            parse_str($url['query'] ?? '', $query);
+
+            return '/admin/homepage-switches/' === ($url['path'] ?? null)
+                && (string) $target->getId() === ($query['criteria']['target'] ?? null)
+                && 'pending' === ($query['criteria']['status'] ?? null);
+        });
+        self::assertCount(1, $counter);
+
+        return $counter;
+    }
+
+    private function adminBrowser(bool $hasAdminRole = true): KernelBrowser
     {
         $admin = self::getContainer()->get('sylius.factory.admin_user')->createNew();
         $admin->setUsername('qa_' . bin2hex(random_bytes(8)));
@@ -819,6 +986,9 @@ final class HomepageSwitchTest extends KernelTestCase
         $admin->setPassword('qa-placeholder');
         $admin->setLocaleCode('en_US');
         $admin->setEnabled(true);
+        if (!$hasAdminRole) {
+            $admin->removeRole('ROLE_ADMINISTRATION_ACCESS');
+        }
         $this->manager->persist($admin);
         $this->manager->flush();
 

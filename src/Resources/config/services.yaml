@@ -20,7 +20,6 @@ services:
         arguments:
             $homepageManager: '@monsieurbiz_homepage.manager.homepage'
             $homepageRepository: '@monsieurbiz_homepage.repository.homepage'
-            $channelRepository: '@sylius.repository.channel'
             $timezone: '%monsieurbiz_homepage.switch_timezone%'
 
     MonsieurBiz\SyliusHomepagePlugin\Service\HomepageAdminPermissions:

@@ -2,6 +2,7 @@ monsieurbiz_homepage:
     ui:
         cms_content: 'CMS contents'
         homepages: 'Homepages'
+        homepage_switches: 'Homepage switches'
         homepage: 'Homepage'
         homepages_subheader: 'Manage your homepages'
         new_homepage: 'New homepage'
@@ -30,12 +31,9 @@ monsieurbiz_homepage:
             title: 'Homepage switches'
             history: 'History'
             history_help: 'Only completed homepage changes are shown, most recent first.'
-            history_empty: 'No homepage changes have been executed for this selection.'
-            all_channels: 'All channels'
             all_switches: 'All switches'
             pending_count: 'Pending switches'
             pending_for_page: 'Pending switches for homepage #%id%'
-            pending_empty: 'No pending switches for this selection.'
             view: 'View switches'
             create: 'Schedule activation'
             activate_now: 'Activate now'
@@ -46,7 +44,6 @@ monsieurbiz_homepage:
             previous: 'Previous homepage'
             target: 'Target homepage'
             executed_at: 'Processed at'
-            empty: 'No switches yet. To create one, choose a page in the homepage list.'
             form:
                 channel: 'Channel'
                 scheduled_at: 'Scheduled date and time'

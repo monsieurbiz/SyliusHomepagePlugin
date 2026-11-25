@@ -23,13 +23,11 @@ use MonsieurBiz\SyliusHomepagePlugin\Repository\HomepageRepository;
 use MonsieurBiz\SyliusHomepagePlugin\Service\HomepageAdminPermissions;
 use MonsieurBiz\SyliusHomepagePlugin\Service\HomepageSwitchScheduler;
 use Sylius\Component\Channel\Model\ChannelInterface;
-use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Resource\ResourceActions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -40,63 +38,11 @@ final class HomepageSwitchController extends AbstractController
     public function __construct(
         private EntityManagerInterface $homepageManager,
         private HomepageRepository $homepageRepository,
-        private ChannelRepositoryInterface $channelRepository,
         private HomepageSwitchScheduler $scheduler,
         private HomepageAdminPermissions $permissions,
         private TranslatorInterface $translator,
         private string $timezone
     ) {
-    }
-
-    public function indexAction(Request $request): Response
-    {
-        $this->permissions->requirePermission($request, ResourceActions::INDEX);
-
-        $historyFlag = $request->query->getString('history');
-        if (!in_array($historyFlag, ['', '0', '1'], true)) {
-            throw new BadRequestHttpException('Invalid homepage history filter.');
-        }
-        $history = '1' === $historyFlag;
-        $target = $history ? '' : $request->query->getString('target');
-        $status = $history ? '' : $request->query->getString('status');
-        $channelCode = $history ? $request->query->getString('channel') : '';
-        if (('' !== $target && (!preg_match('/^[1-9]\d{0,9}$/D', $target) || (int) $target > 2_147_483_647))
-            || !in_array($status, ['', HomepageSwitch::PENDING], true)
-            || strlen($channelCode) > 255
-        ) {
-            throw new BadRequestHttpException('Invalid homepage switch filters.');
-        }
-        $targetId = '' !== $target ? (int) $target : null;
-        $channel = '' !== $channelCode ? $this->channelRepository->findOneByCode($channelCode) : null;
-        if ('' !== $channelCode && null === $channel) {
-            throw new BadRequestHttpException('Unknown homepage history channel.');
-        }
-
-        $criteria = $history ? ['status' => HomepageSwitch::EXECUTED] : [];
-        if (null !== $targetId) {
-            $criteria['target'] = $targetId;
-        }
-        if ('' !== $status) {
-            $criteria['status'] = $status;
-        }
-        if (null !== $channel) {
-            $criteria['channel'] = $channel;
-        }
-
-        return $this->render('@MonsieurBizSyliusHomepagePlugin/admin/homepage_switch/index.html.twig', [
-            'switches' => $this->homepageManager->getRepository(HomepageSwitch::class)->findBy(
-                $criteria,
-                [$history ? 'executedAt' : 'scheduledAt' => 'DESC', 'id' => 'DESC']
-            ),
-            'timezone' => $this->timezone,
-            'channels' => $this->channelRepository->findBy([], ['name' => 'ASC']),
-            'filters' => [
-                'target' => $targetId,
-                'status' => '' !== $status ? $status : null,
-                'history' => $history,
-                'channel' => $channel?->getCode(),
-            ],
-        ]);
     }
 
     public function createAction(Request $request, int $id): Response

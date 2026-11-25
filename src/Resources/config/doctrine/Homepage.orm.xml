@@ -10,6 +10,12 @@
             <generator strategy="AUTO"/>
         </id>
 
+        <field name="enabled" type="boolean">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>
+
         <many-to-many field="channels" target-entity="Sylius\Component\Channel\Model\ChannelInterface">
             <join-table name="monsieurbiz_homepage_homepage_channels">
                 <join-columns>

@@ -17,9 +17,12 @@ sylius_grid:
                     label: monsieurbiz_homepage.ui.form.id
                     sortable: ~
                 name:
-                    type: string
+                    type: twig
+                    path: .
                     label: monsieurbiz_homepage.ui.form.name
                     sortable: translation.name
+                    options:
+                        template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage/name.html.twig'
                 channels:
                     type: twig
                     label: sylius.ui.channels
@@ -27,8 +30,20 @@ sylius_grid:
                         template: "@SyliusAdmin/shared/grid/field/channels.html.twig"
                         vars:
                             th_class: "w-1 text-center"
+                pending_switches:
+                    type: twig
+                    path: .
+                    label: monsieurbiz_homepage.ui.switch.pending_count
+                    options:
+                        template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage/pending_switches.html.twig'
             actions:
                 main:
+                    switches:
+                        type: default
+                        label: monsieurbiz_homepage.ui.switch.view
+                        options:
+                            link:
+                                route: monsieurbiz_homepage_admin_homepage_switch_index
                     create:
                         type: create
                         label: monsieurbiz_homepage.ui.actions.create
@@ -37,6 +52,21 @@ sylius_grid:
                         type: update
                     delete:
                         type: delete
+                subitem:
+                    activation:
+                        type: list
+                        label: monsieurbiz_homepage.ui.switch.title
+                        options:
+                            visible: resource.enabled
+                            links:
+                                create:
+                                    label: monsieurbiz_homepage.ui.switch.create
+                                    route: monsieurbiz_homepage_admin_homepage_switch_create
+                                    parameters: { id: resource.id }
+                                activate_now:
+                                    label: monsieurbiz_homepage.ui.switch.activate_now
+                                    route: monsieurbiz_homepage_admin_homepage_switch_activate_now
+                                    parameters: { id: resource.id }
             filters:
                 name:
                     type: string
@@ -55,3 +85,86 @@ sylius_grid:
                         fields: [ channels.id ]
                     form_options:
                         class: "%sylius.model.channel.class%"
+
+        monsieurbiz_homepage_switch:
+            driver: &homepage_switch_driver
+                name: doctrine/orm
+                options: &homepage_switch_driver_options
+                    class: '%monsieurbiz_homepage.model.homepage_switch.class%'
+                    repository:
+                        method: createListQueryBuilder
+            limits: &homepage_switch_limits [25, 50, 100, 200]
+            fields:
+                <<: &homepage_switch_fields
+                    channel:
+                        type: twig
+                        label: sylius.ui.channel
+                        options:
+                            template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage_switch/grid/channel.html.twig'
+                    previous:
+                        type: twig
+                        label: monsieurbiz_homepage.ui.switch.previous
+                        options: &homepage_switch_page_options
+                            template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage_switch/grid/page.html.twig'
+                    target:
+                        type: twig
+                        label: monsieurbiz_homepage.ui.switch.target
+                        options: *homepage_switch_page_options
+                    scheduledAt:
+                        type: twig
+                        label: monsieurbiz_homepage.ui.switch.form.scheduled_at
+                        options: &homepage_switch_datetime_options
+                            template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage_switch/grid/datetime.html.twig'
+                            vars: { timezone: '%monsieurbiz_homepage.switch_timezone%' }
+                    executedAt:
+                        type: twig
+                        label: monsieurbiz_homepage.ui.switch.executed_at
+                        options: *homepage_switch_datetime_options
+                status:
+                    type: twig
+                    path: .
+                    label: sylius.ui.status
+                    options:
+                        template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage_switch/grid/status.html.twig'
+                actions:
+                    type: twig
+                    path: .
+                    label: sylius.ui.actions
+                    options:
+                        template: '@MonsieurBizSyliusHomepagePlugin/admin/homepage_switch/grid/actions.html.twig'
+            filters:
+                channel: &homepage_switch_channel_filter
+                    type: entity
+                    label: sylius.ui.channel
+                    form_options:
+                        class: '%sylius.model.channel.class%'
+                        choice_label: name
+                target:
+                    type: entity
+                    label: monsieurbiz_homepage.ui.switch.target
+                    form_options:
+                        class: '%monsieurbiz_homepage.model.homepage.class%'
+                        choice_label: id
+                status:
+                    type: select
+                    label: sylius.ui.status
+                    form_options:
+                        choices:
+                            monsieurbiz_homepage.ui.switch.status.pending: pending
+                            monsieurbiz_homepage.ui.switch.status.executed: executed
+                            monsieurbiz_homepage.ui.switch.status.no_change: no_change
+                            monsieurbiz_homepage.ui.switch.status.failed: failed
+                            monsieurbiz_homepage.ui.switch.status.superseded: superseded
+                            monsieurbiz_homepage.ui.switch.status.cancelled: cancelled
+
+        monsieurbiz_homepage_switch_history:
+            driver:
+                <<: *homepage_switch_driver
+                options:
+                    <<: *homepage_switch_driver_options
+                    repository:
+                        method: createHistoryQueryBuilder
+            limits: *homepage_switch_limits
+            fields: *homepage_switch_fields
+            filters:
+                channel: *homepage_switch_channel_filter

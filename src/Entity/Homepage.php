@@ -33,6 +33,8 @@ class Homepage implements HomepageInterface
 
     protected ?int $id = null;
 
+    protected bool $enabled = true;
+
     /**
      * @var Collection<int, ChannelInterface>
      */
@@ -57,6 +59,16 @@ class Homepage implements HomepageInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
     }
 
     /**

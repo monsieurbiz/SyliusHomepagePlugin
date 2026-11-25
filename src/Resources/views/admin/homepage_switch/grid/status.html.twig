@@ -1,0 +1,4 @@
+{{ ('monsieurbiz_homepage.ui.switch.status.' ~ data.status)|trans }}
+{% if data.reason %}
+    <div class="text-secondary">{{ ('monsieurbiz_homepage.ui.switch.reason.' ~ data.reason)|trans }}</div>
+{% endif %}

@@ -10,4 +10,7 @@ sylius_resource:
             translation:
                 classes:
                     model: MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageTranslation
-
+        monsieurbiz_homepage.homepage_switch:
+            classes:
+                model: MonsieurBiz\SyliusHomepagePlugin\Entity\HomepageSwitch
+                repository: MonsieurBiz\SyliusHomepagePlugin\Repository\HomepageSwitchRepository

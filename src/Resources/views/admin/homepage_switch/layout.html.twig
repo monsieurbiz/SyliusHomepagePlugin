@@ -1,0 +1,29 @@
+{% extends '@SyliusAdmin/shared/layout/base.html.twig' %}
+{% from '@SyliusAdmin/shared/helper/breadcrumbs.html.twig' import breadcrumbs %}
+
+{% block title %}{{ heading|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% include '@SyliusAdmin/shared/crud/common/sidebar.html.twig' %}
+    {% include '@SyliusAdmin/shared/crud/common/navbar.html.twig' %}
+    <div class="page-wrapper">
+        {% include '@SyliusAdmin/shared/crud/common/content/flashes.html.twig' %}
+        <div class="page-header">
+            <div class="container-xl">
+                {{ breadcrumbs([
+                    {name: 'sylius.ui.dashboard', url: path('sylius_admin_dashboard')},
+                    {name: 'monsieurbiz_homepage.ui.homepages', url: path('monsieurbiz_homepage_admin_homepage_index')},
+                    form is defined ? {name: 'monsieurbiz_homepage.ui.switch.title', url: path('monsieurbiz_homepage_admin_homepage_switch_index')} : null,
+                    {name: heading, active: true},
+                ]) }}
+                <h1 class="page-title">{{ heading|trans }}</h1>
+            </div>
+        </div>
+        <main class="page-body">
+            <div class="container-xl">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+        {% include '@SyliusAdmin/shared/crud/common/content/footer.html.twig' %}
+    </div>
+{% endblock %}

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusHomepagePlugin\DependencyInjection;
 
+use DateTimeZone;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -23,6 +24,19 @@ final class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        return new TreeBuilder('monsieurbiz_sylius_homepage');
+        $tree = new TreeBuilder('monsieurbiz_sylius_homepage');
+        $tree->getRootNode()
+            ->children()
+                ->scalarNode('timezone')
+                    ->defaultValue('UTC')
+                    ->validate()
+                        ->ifNotInArray(DateTimeZone::listIdentifiers(DateTimeZone::ALL_WITH_BC))
+                        ->thenInvalid('Expected a named timezone, for example Europe/Paris, got %s.')
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $tree;
     }
 }

@@ -2,3 +2,12 @@ sylius:
     resource:
         monsieurbiz_homepage:
             unique_channel: 'Vous ne pouvez pas avoir plusieures pages d''accueil pour un même canal.'
+monsieurbiz_homepage:
+    switch:
+        queued: 'Demande de bascule enregistrée, en attente de traitement.'
+        rescheduled: 'La bascule a été replanifiée.'
+        cancelled: 'La bascule a été annulée.'
+        page_disabled_with_pending: 'Des bascules visent cette page. Elles ne seront pas exécutées si elle est toujours désactivée lors du traitement.'
+        assigned_channel: 'Vérifiez les canaux sélectionnés : l’affectation a pu changer. Lors de la création, cochez « Basculer maintenant » uniquement pour les canaux occupés à remplacer. Pour un remplacement ultérieur, planifiez une bascule.'
+        assigned_page: 'Une page affectée à un canal ne peut être ni désactivée ni supprimée.'
+        referenced_page: 'Cette page ne peut pas être supprimée : une bascule la référence.'

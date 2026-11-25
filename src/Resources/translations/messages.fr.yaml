@@ -2,6 +2,7 @@ monsieurbiz_homepage:
     ui:
         cms_content: 'Contenus CMS'
         homepages: 'Pages d''accueil'
+        homepage_switches: 'Bascules de page d’accueil'
         homepage: 'Page d''accueil'
         homepages_subheader: 'Gérez vos pages d''accueil'
         new_homepage: 'Nouvelle page d''accueil'
@@ -12,6 +13,12 @@ monsieurbiz_homepage:
             name: 'Nom'
             content: 'Contenu'
             channels: 'Canaux'
+            occupied: 'Ce canal a déjà une page d’accueil.'
+            occupied_help: 'Pour remplacer la page d’un canal occupé, cochez le canal et « Basculer maintenant ». L’enregistrement mettra la demande en file. Pour planifier la bascule plus tard, laissez les deux cases décochées.'
+            switch_now: 'Basculer maintenant'
+            switch_now_channel: 'Basculer maintenant sur %channel%'
+            enabled: 'Page activée'
+            enabled_pending: 'Si cette page est désactivée au moment d’une bascule, elle ne remplacera pas la page en place.'
             meta_title: 'Meta titre'
             meta_description: 'Meta description'
             meta_keywords: 'Meta mots clés'
@@ -20,6 +27,45 @@ monsieurbiz_homepage:
             id: 'ID'
         actions:
             create: 'Nouvelle page d''accueil'
+        switch:
+            title: 'Bascules de page d’accueil'
+            history: 'Historique'
+            history_help: 'Seuls les changements de page effectivement exécutés sont affichés, du plus récent au plus ancien.'
+            all_switches: 'Toutes les bascules'
+            pending_count: 'Bascules en attente'
+            pending_for_page: 'Bascules en attente pour la page n° %id%'
+            view: 'Voir les bascules'
+            create: 'Planifier l’activation'
+            activate_now: 'Activer maintenant'
+            update: 'Replanifier'
+            confirm: 'Confirmer la mise en file'
+            confirmation: 'La demande sera mise en file immédiatement. La page du canal ne changera qu’après traitement. Les activations prévues pour plus tard sont conservées.'
+            timezone: 'Fuseau horaire : %timezone%'
+            previous: 'Page précédente'
+            target: 'Page cible'
+            executed_at: 'Date de traitement'
+            form:
+                channel: 'Canal'
+                scheduled_at: 'Date et heure prévues'
+            status:
+                pending: 'En attente'
+                executed: 'Exécutée'
+                no_change: 'Aucun changement'
+                failed: 'Échec'
+                superseded: 'Écartée'
+                cancelled: 'Annulée'
+            reason:
+                target_disabled: 'La page cible était désactivée.'
+                missing_locale: 'La page cible n’était pas disponible dans toutes les langues actives du canal.'
+                already_active: 'La page cible était déjà en place sur ce canal.'
+                newer_switch: 'Une bascule plus récente pour ce canal a pris la priorité.'
+            error:
+                disabled: 'Cette page est désactivée. Réactivez-la avant de demander une bascule.'
+                duplicate: 'Une bascule est déjà prévue pour ce canal à cet instant. Choisissez un autre horaire.'
+                future: 'Choisissez une date et une heure dans le futur.'
+                invalid_local_time: 'Cette heure locale est inexistante ou ambiguë dans le fuseau indiqué. Choisissez une autre heure.'
+                not_pending: 'Cette bascule n’est plus en attente et ne peut plus être modifiée.'
+                missing: 'La ressource demandée est introuvable.'
 sylius_plus:
     rbac:
         parent:
